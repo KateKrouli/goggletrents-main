@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Новости в мозайке</title>
+<style>
+  body { font-family: Arial, sans-serif; padding: 20px; }
+  h1 { color: #e74c3c; }
+  #mosaic { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
+  .tile { padding: 10px 15px; background: #3498db; color: white; cursor: pointer; border-radius: 4px; transition: 0.2s; }
+  .tile:hover { background: #2980b9; }
+  .news-item { margin-bottom: 20px; }
+  .news-item img { width: 100%; max-width: 600px; height: auto; border-radius: 4px; }
+  .news-item h2 { margin: 10px 0; }
+  .news-item p { color: #555; }
+  .news-item a { color: #2980b9; text-decoration: none; }
+</style>
+</head>
+<body>
+
+<h1>Популярные запросы</h1>
+<div id="mosaic"></div>
+
+<h2>Новости</h2>
+<div id="news-container"></div>
+
+<script>
+async function loadPopular() {
+  const res = await fetch('/popular');
+  const queries = await res.json();
+
+  const mosaic = document.getElementById('mosaic');
+  mosaic.innerHTML = '';
+  queries.forEach(q => {
+    const tile = document.createElement('div');
+    tile.className = 'tile';
+    tile.textContent = q;
+    tile.addEventListener('click', () => loadNews(q));
+    mosaic.appendChild(tile);
+  });
+}
+
+async function loadNews(topic) {
+  const res = await fetch(`/news?q=${encodeURIComponent(topic)}`);
+  const articles = await res.json();
+
+  const container = document.getElementById('news-container');
+  container.innerHTML = '';
+
+  if (!articles.length) {
+    container.innerHTML = "<p>Новостей не найдено</p>";
+    return;
+  }
+
+  articles.forEach(article => {
+    const item = document.createElement('div');
+    item.className = 'news-item';
+    item.innerHTML = `
+      <h2><a href="${article.url}" target="_blank">${article.title}</a></h2>
+      ${article.imageUrl ? `<img src="${article.imageUrl}" alt="${article.title}">` : ''}
+      <p>${article.description || ''}</p>
+      <small>Опубликовано: ${new Date(article.publishedAt).toLocaleString()}</small>
+    `;
+    container.appendChild(item);
+  });
+}
+
+// Загрузка популярных запросов при старте
+loadPopular();
+
+// Сразу подгружаем новости по теме Galatasaray, чтобы кастомные новости отображались
+loadNews("Galatasaray");
+</script>
+</body>
+</html>
