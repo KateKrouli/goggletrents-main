@@ -1,11 +1,12 @@
 const express = require("express");
 const axios = require("axios");
+const googleTrends = require('google-trends-api');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 const API_KEY = "9455fa9a233f46f290770aa1018c93e6"; // вставьте ваш ключ
 
-app.use(express.static("public"));
+app.use(express.static("dist")); // Добавь эту строку
 
 // Кастомные новости
 const customNews = [
@@ -27,18 +28,33 @@ const customNews = [
 
 
 // Популярные запросы (статично)
-app.get("/popular", (req, res) => {
-  const popularQueries = [
-    "Galatasaray",
-    "Fenerbahce",
-    "UEFA",
-    "Champions League",
-    "Messi",
-    "Ronaldo",
-    "Bitcoin",
-    "Ethereum"
-  ];
-  res.json(popularQueries);
+app.get("/popular", async (req, res) => {
+  try {
+    const geo = req.query.geo || 'TR';
+    const results = await googleTrends.dailyTrends({ geo });
+
+    // Выводим ответ от Google Trends в консоль
+    console.log("Google Trends response:", results);
+
+    // Проверяем, что ответ похож на JSON
+    if (!results.trim().startsWith('{')) throw new Error("Google Trends returned non-JSON");
+
+    const data = JSON.parse(results);
+    const queries = data.default.trendingSearchesDays[0].trendingSearches.map(item => item.title.query);
+    res.json(queries);
+  } catch (err) {
+    console.error("Google Trends error:", err.message);
+    res.json([
+      "Galatasaray",
+      "Fenerbahce",
+      "UEFA",
+      "Champions League",
+      "Messi",
+      "Ronaldo",
+      "Bitcoin",
+      "Ethereum"
+    ]);
+  }
 });
 
 // Новости по теме
@@ -70,6 +86,39 @@ app.get("/news", async (req, res) => {
     // Возвращаем только кастомные новости при ошибке
     res.json(customNews);
   }
+});
+
+// Новый маршрут для всех популярных запросов
+app.get("/popular/all", (req, res) => {
+  res.json({
+    turkey: [
+      "Galatasaray",
+      "Fenerbahce",
+      "UEFA",
+      "Champions League",
+      "Istanbul",
+      "Beşiktaş",
+      "Trabzonspor"
+    ],
+    azerbaijan: [
+      "Baku",
+      "Qarabag FK",
+      "Azerbaijan Grand Prix",
+      "Shusha",
+      "Nizami",
+      "Bakcell",
+      "Nar Mobile"
+    ],
+    lebanon: [
+      "Beirut",
+      "Lebanon news",
+      "Cedar",
+      "Tripoli",
+      "Byblos",
+      "Lebanese cuisine",
+      "Rafic Hariri"
+    ]
+  });
 });
 
 app.listen(PORT, () => console.log(`🚀 Сервер запущен: http://localhost:${PORT}`));

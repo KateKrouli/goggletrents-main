@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Demo</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+  <div class="header main-width">
+    <div class="header__logo"><img src="images/logo.webp"><div><span>google</span>trends</div></div>
+    <div class="custom-lang-switcher" id="lang-switcher">
+  <button type="button" class="lang-btn" data-value="tr">
+    <span class="lang-flag flag-tr">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g clip-path="url(#clip0_23018_283)">
+          <path d="M10 20C15.5228 20 20 15.5228 20 10C20 4.47715 15.5228 0 10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20Z" fill="#D80027"></path>
+          <path d="M9.59043 8.17139L10.4109 9.30205L11.7397 8.87119L10.9179 10.0009L11.7383 11.1315L10.41 10.699L9.58824 11.8287L9.5891 10.4318L8.26074 9.99928L9.58957 9.56842L9.59043 8.17139Z" fill="#F0F0F0"></path>
+          <path d="M7.35133 12.8262C5.79055 12.8262 4.52523 11.5609 4.52523 10.0001C4.52523 8.43935 5.79055 7.17404 7.35133 7.17404C7.83797 7.17404 8.29586 7.29712 8.69563 7.51373C8.06848 6.90037 7.21078 6.52185 6.26437 6.52185C4.34336 6.52185 2.78613 8.07912 2.78613 10.0001C2.78613 11.9211 4.3434 13.4783 6.26437 13.4783C7.21086 13.4783 8.06852 13.0998 8.69563 12.4865C8.29586 12.7031 7.83797 12.8262 7.35133 12.8262Z" fill="#F0F0F0"></path>
+        </g>
+        <defs>
+          <clipPath id="clip0_23018_283">
+            <rect width="20" height="20" fill="white"></rect>
+          </clipPath>
+        </defs>
+      </svg>
+    </span>
+  </button>
+  <button type="button" class="lang-btn" data-value="en">
+    <span class="lang-flag flag-en">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_3238_134572)"><path d="M12 24C18.6274 24 24 18.6274 24 12C24 5.37258 18.6274 0 12 0C5.37258 0 0 5.37258 0 12C0 18.6274 5.37258 24 12 24Z" fill="#F0F0F0"></path><path d="M2.48032 4.69409C1.53771 5.92048 0.826945 7.334 0.413086 8.86958H6.6558L2.48032 4.69409Z" fill="#0052B4"></path><path d="M23.5864 8.86953C23.1725 7.334 22.4617 5.92048 21.5191 4.69409L17.3438 8.86953H23.5864Z" fill="#0052B4"></path><path d="M0.413086 15.1304C0.826992 16.6659 1.53776 18.0794 2.48032 19.3058L6.65566 15.1304H0.413086Z" fill="#0052B4"></path><path d="M19.3053 2.48061C18.0789 1.538 16.6655 0.827236 15.1299 0.41333V6.656L19.3053 2.48061Z" fill="#0052B4"></path><path d="M4.69434 21.5193C5.92073 22.4619 7.33424 23.1727 8.86977 23.5866V17.344L4.69434 21.5193Z" fill="#0052B4"></path><path d="M8.86973 0.41333C7.33419 0.827236 5.92068 1.538 4.69434 2.48056L8.86973 6.65595V0.41333Z" fill="#0052B4"></path><path d="M15.1299 23.5866C16.6654 23.1727 18.0789 22.4619 19.3053 21.5194L15.1299 17.344V23.5866Z" fill="#0052B4"></path><path d="M17.3438 15.1304L21.5191 19.3058C22.4617 18.0795 23.1725 16.6659 23.5864 15.1304H17.3438Z" fill="#0052B4"></path><path d="M23.8984 10.4348H13.5653H13.5653V0.101578C13.0529 0.034875 12.5305 0 12 0C11.4694 0 10.9471 0.034875 10.4348 0.101578V10.4347V10.4347H0.101578C0.034875 10.9471 0 11.4695 0 12C0 12.5306 0.034875 13.0529 0.101578 13.5652H10.4347H10.4347V23.8984C10.9471 23.9651 11.4694 24 12 24C12.5305 24 13.0529 23.9652 13.5652 23.8984V13.5653V13.5653H23.8984C23.9651 13.0529 24 12.5306 24 12C24 11.4695 23.9651 10.9471 23.8984 10.4348Z" fill="#D80027"></path><path d="M15.1309 15.1304L20.4857 20.4852C20.732 20.239 20.9669 19.9817 21.191 19.7148L16.6066 15.1304H15.1309V15.1304Z" fill="#D80027"></path><path d="M8.86951 15.1306H8.86941L3.51465 20.4854C3.76084 20.7317 4.01823 20.9666 4.28504 21.1908L8.86951 16.6062V15.1306Z" fill="#D80027"></path><path d="M8.86976 8.8696V8.86951L3.51495 3.51465C3.26866 3.76084 3.03373 4.01823 2.80957 4.28504L7.39409 8.86955L8.86976 8.8696Z" fill="#D80027"></path><path d="M15.1309 8.86956L20.4857 3.51465C20.2395 3.26837 19.9821 3.03344 19.7153 2.80933L15.1309 7.39384V8.86956Z" fill="#D80027"></path></g><defs><clipPath id="clip0_3238_134572"><rect width="24" height="24" fill="white"></rect></clipPath></defs></svg>
+    </span>
+  </button>
+</div>
+
+<style>
+.custom-lang-switcher {
+  display: flex;
+  align-items: center;
+  font-family: inherit;
+  min-width: 0;
+  width: auto; 
+  margin-left: 48px;
+  padding: 0;
+  border-radius: 133px;
+  box-shadow: inset 0 0 0 1px rgba(0, 26, 51, 0.07);
+  transition: all .3s ease;
+
+  &:hover {
+    box-shadow: inset 0 0 0 1px #002142;
+  }
+}
+.lang-btn {
+  display: flex;
+  align-items: center;
+  width: 44px;
+  height: 44px;
+  background: transparent;
+  border-radius: 50%;
+  padding: 10px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: border 0.15s;
+}
+.lang-btn.active {
+  border: 1.5px solid var(--semantic-brand-500);
+  outline: none;
+  background: #fff;
+}
+.lang-flag {
+  height: 20px;
+  width: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+@media (max-width: 767px) {
+  .custom-lang-switcher {
+    width: 100%;
+    justify-content: center;
+    gap: 12px;
+  }
+  .lang-btn {
+    width: 50%;
+    justify-content: center;
+    padding: 12px 16px 12px 12px;
+    font-size: 15px;
+  }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const switcher = document.getElementById('lang-switcher');
+  const buttons = switcher.querySelectorAll('.lang-btn');
+  let current = localStorage.getItem('lang') || 'en';
+
+  function setActive(val) {
+    buttons.forEach(btn => {
+      btn.classList.toggle('active', btn.getAttribute('data-value') === val);
+    });
+  }
+
+  setActive(current);
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', function() {
+      const val = btn.getAttribute('data-value');
+      setActive(val);
+      if (window.setLanguage) window.setLanguage(val);
+    });
+  });
+});
+</script>
+    <div class="header__nav">
+      <nav>
+        <ul>
+          <li><a href="#" data-i18n="header.menuHome">Trending</a></li>
+          <li><a href="#" data-i18n="header.menuAbout">News</a></li>
+          <li><a href="#" data-i18n="header.menuContact">About</a></li>
+        </ul>
+      </nav>
+     
+      <a class="btn search-btn" href="">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M17.5003 17.5003L13.8753 13.8753M15.8333 9.16667C15.8333 12.8486 12.8486 15.8333 9.16667 15.8333C5.48477 15.8333 2.5 12.8486 2.5 9.16667C2.5 5.48477 5.48477 2.5 9.16667 2.5C12.8486 2.5 15.8333 5.48477 15.8333 9.16667Z" stroke="#001A33" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+        </a>
+    </div>
+    <div class="header__mobile-btn"></div>
+  </div>
+</header>
+ 
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const mobileBtn = document.querySelector('.header__mobile-btn');
+  const nav = document.querySelector('.header__nav');
+  const header = document.querySelector('header');
+  if (mobileBtn && nav && header) {
+    mobileBtn.addEventListener('click', function() {
+      mobileBtn.classList.toggle('close');
+      nav.classList.toggle('open');
+      header.classList.toggle('nav-open');
+    });
+  }
+});
+</script>
+  <main>
+      
+<div class="main-block main-width">
+    <div class="main-block__content">
+        <h1 data-i18n="main.title" class="main-block__title">Go OG — Follow the Trends</h1>
+        <div data-i18n="main.description" class="main-block__description">A community-driven platform discovering and tracking sports content across MENA.</div>
+        <div class="main-block__search">
+            <div class="main-block__form">
+                <button type="submit" class="main-block__btn" id="search-btn">
+                </button>
+                <input data-i18n-placeholder="main.button" id="search-input" name="search" type="text" class="main-block__input" placeholder="Search Trends & News">
+            </div>
+        </div>
+    </div>
+    <div class="top-news">
+        <div class="top-news__list">
+            <div class="top-news__item">
+                <div class="top-news__summary">
+                    <div class="top-news__country"><img src="images/icon-turkey.webp"> Turkey</div>
+                    <div class="top-news__date">7 hours ago</div>
+                </div>
+                <div class="top-news__title">Beirut club unveils rising star f Al Ahli secures late </div>
+            </div>
+            <div class="top-news__item">
+                <div class="top-news__summary">
+                    <div class="top-news__country"><img src="images/icon-turkey.webp"> Turkey</div>
+                    <div class="top-news__date">7 hours ago</div>
+                </div>
+                <div class="top-news__title">Beirut club unveils rising star f Al Ahli secures late </div>
+            </div>
+            <div class="top-news__item">
+                <div class="top-news__summary">
+                    <div class="top-news__country"><img src="images/icon-turkey.webp"> Turkey</div>
+                    <div class="top-news__date">7 hours ago</div>
+                </div>
+                <div class="top-news__title">Beirut club unveils rising star f Al Ahli secures late </div>
+            </div>
+            <div class="top-news__item">
+                <div class="top-news__summary">
+                    <div class="top-news__country"><img src="images/icon-turkey.webp"> Turkey</div>
+                    <div class="top-news__date">7 hours ago</div>
+                </div>
+                <div class="top-news__title">Beirut club unveils rising star f Al Ahli secures late </div>
+            </div>
+        </div>
+    </div>
+</div>   
+      <div class="top-trends main-width">
+    <div class="main-title">
+        <h2>Top Trends</h2>
+        <span>Real-time tracking of the hottest sports topics across </span>
+    </div>
+    <div class="top-trends__container">
+        <div class="top-trends__list">
+            <div class="top-trends__title">
+                <img src="images/icon-turkey.webp"> Turkey
+            </div>
+            <ul id="mosaic">
+            </ul>
+        </div>
+        <div class="top-trends__list">
+            <div class="top-trends__title">
+                <img src="images/icon-az.webp"> Azerbaijan
+            </div>
+            <ul>
+                <li *ngFor="let trend of trends">
+                <a [href]="trend.url" class="top-trends__item"><div>{{ trend.name }}</div>
+                    <span>{{ trend.tweet_volume | number }}</span>
+                </a>
+            </li>
+             <li *ngFor="let trend of trends">
+                <a [href]="trend.url" class="top-trends__item top-trends__item--custom"><div>{{ trend.name }}</div>
+                    <span>{{ trend.tweet_volume | number }}</span>
+                </a>
+            </li>
+            </ul>
+        </div>
+        <div class="top-trends__list">
+            <div class="top-trends__title">
+                <img src="images/icon-leb.webp"> Lebanon
+            </div>
+            <ul>
+                <li *ngFor="let trend of trends">
+                <a [href]="trend.url" class="top-trends__item"><div>{{ trend.name }}</div>
+                    <span>{{ trend.tweet_volume | number }}</span>
+                </a>
+            </li>
+             <li *ngFor="let trend of trends">
+                <a [href]="trend.url" class="top-trends__item top-trends__item--custom"><div>{{ trend.name }}</div>
+                    <span>{{ trend.tweet_volume | number }}</span>
+                </a>
+            </li>
+            </ul>
+        </div>
+    </div>
+</div>  
+      <h1>Популярные запросы</h1>
+
+    <!-- Кнопки сортировки -->
+    <div style="margin-bottom: 16px;">
+      <button id="sort-default" style="padding:6px 12px;">По умолчанию</button>
+      <button id="sort-date" style="padding:6px 12px;">По дате (по убыванию)</button>
+      <button id="sort-likes" style="padding:6px 12px;">По лайкам</button>
+      <button id="sort-views" style="padding:6px 12px;">По просмотрам</button>
+    </div>
+
+    <h2>Новости</h2>
+    <div id="news-container"></div>
+ 
+<script>
+let lastArticles = []; // Сохраняем последние загруженные статьи
+
+async function loadPopular() {
+  const res = await fetch('/popular');
+  const queries = await res.json();
+
+  const mosaic = document.getElementById('mosaic');
+  if (mosaic) {
+    mosaic.innerHTML = '';
+    queries.forEach(q => {
+      const tile = document.createElement('li');
+      tile.className = 'top-trends__item';
+      tile.textContent = q;
+      tile.addEventListener('click', () => loadNews(q));
+      mosaic.appendChild(tile);
+    });
+  }
+}
+
+async function loadNews(topic) {
+  const res = await fetch(`/news?q=${encodeURIComponent(topic)}`);
+  const articles = await res.json();
+
+  // Для теста: добавим случайные лайки и просмотры, если их нет
+  articles.forEach(a => {
+    if (typeof a.likes === 'undefined') a.likes = Math.floor(Math.random() * 1000);
+    if (typeof a.views === 'undefined') a.views = Math.floor(Math.random() * 5000);
+  });
+
+  lastArticles = articles; // Сохраняем оригинальный порядок
+  renderNews(articles);
+}
+
+function renderNews(articles) {
+  const container = document.getElementById('news-container');
+  container.innerHTML = '';
+
+  if (!articles.length) {
+    container.innerHTML = "<p>Новостей не найдено</p>";
+    return;
+  }
+
+  articles.forEach(article => {
+    const item = document.createElement('div');
+    item.className = 'news-item';
+    item.innerHTML = `
+      <h2><a href="${article.url}" target="_blank">${article.title}</a></h2>
+      ${article.imageUrl ? `<img src="${article.imageUrl}" alt="${article.title}">` : ''}
+      <p>${article.description || ''}</p>
+      <small>Опубликовано: ${new Date(article.publishedAt).toLocaleString()}</small>
+      <div>👍 Лайки: ${article.likes ?? 0} | 👁️ Просмотры: ${article.views ?? 0}</div>
+    `;
+    container.appendChild(item);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const input = document.getElementById('search-input');
+  const btn = document.getElementById('search-btn');
+  if (input && btn) {
+    btn.addEventListener('click', () => {
+      const query = input.value.trim();
+      if (query) loadNews(query);
+    });
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        const query = input.value.trim();
+        if (query) loadNews(query);
+      }
+    });
+  }
+
+  // Сортировка по умолчанию
+  document.getElementById('sort-default').addEventListener('click', () => {
+    renderNews(lastArticles);
+  });
+
+  // Сортировка по дате (по убыванию)
+  document.getElementById('sort-date').addEventListener('click', () => {
+    const sorted = [...lastArticles].sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
+    renderNews(sorted);
+  });
+
+  // Сортировка по лайкам
+  document.getElementById('sort-likes').addEventListener('click', () => {
+    const sorted = [...lastArticles].sort((a, b) => (b.likes ?? 0) - (a.likes ?? 0));
+    renderNews(sorted);
+  });
+
+  // Сортировка по просмотрам
+  document.getElementById('sort-views').addEventListener('click', () => {
+    const sorted = [...lastArticles].sort((a, b) => (b.views ?? 0) - (a.views ?? 0));
+    renderNews(sorted);
+  });
+
+  loadPopular();
+  loadNews("Galatasaray");
+});
+</script>
+  </main> 
+
+  <footer>
+    <div class="footer main-width">
+        <nav class="footer__nav">
+            <ul>
+                <li><a href="#" data-i18n="footer.menuPrivacy">Gizlilik Politikası</a></li>
+                <li><a href="#" data-i18n="footer.menuTerms">Kullanım Şartları</a></li>
+                <li><a href="#" data-i18n="footer.menuContact">İletişim</a></li>
+            </ul>
+        </nav>
+        <p data-i18n="footer.copyright">&copy; 2025</p>
+    </div>
+</footer>  
+
+  <script src="lang.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
