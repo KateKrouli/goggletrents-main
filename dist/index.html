@@ -203,7 +203,9 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="top-trends__title">
                 <img src="images/icon-turkey.webp"> Turkey
             </div>
-            <ul id="mosaic">
+            <ul>
+                <li class="top-trends__item top-trends__item--custom">Al Ahly</li>
+                    
             </ul>
         </div>
         <div class="top-trends__list">
@@ -211,16 +213,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 <img src="images/icon-az.webp"> Azerbaijan
             </div>
             <ul>
-                <li *ngFor="let trend of trends">
-                <a [href]="trend.url" class="top-trends__item"><div>{{ trend.name }}</div>
-                    <span>{{ trend.tweet_volume | number }}</span>
-                </a>
-            </li>
-             <li *ngFor="let trend of trends">
-                <a [href]="trend.url" class="top-trends__item top-trends__item--custom"><div>{{ trend.name }}</div>
-                    <span>{{ trend.tweet_volume | number }}</span>
-                </a>
-            </li>
             </ul>
         </div>
         <div class="top-trends__list">
@@ -228,133 +220,34 @@ document.addEventListener('DOMContentLoaded', function() {
                 <img src="images/icon-leb.webp"> Lebanon
             </div>
             <ul>
-                <li *ngFor="let trend of trends">
-                <a [href]="trend.url" class="top-trends__item"><div>{{ trend.name }}</div>
-                    <span>{{ trend.tweet_volume | number }}</span>
-                </a>
-            </li>
-             <li *ngFor="let trend of trends">
-                <a [href]="trend.url" class="top-trends__item top-trends__item--custom"><div>{{ trend.name }}</div>
-                    <span>{{ trend.tweet_volume | number }}</span>
-                </a>
-            </li>
+                
             </ul>
         </div>
     </div>
 </div>  
-      <h1>Популярные запросы</h1>
-
-    <!-- Кнопки сортировки -->
-    <div style="margin-bottom: 16px;">
-      <button id="sort-default" style="padding:6px 12px;">По умолчанию</button>
-      <button id="sort-date" style="padding:6px 12px;">По дате (по убыванию)</button>
-      <button id="sort-likes" style="padding:6px 12px;">По лайкам</button>
-      <button id="sort-views" style="padding:6px 12px;">По просмотрам</button>
+      <div class="telegram main-width">
+    <div class="telegram__content">
+        <h2 data-i18n="telegram.title" class="telegram__title">Stay Connected — <span>Join Our Telegram</span></h2>
+        <div data-i18n="telegram.description" class="telegram__description">Get the hottest sports stories, trend alerts, and exclusive insights directly in our Telegram channel. Don’t miss out on updates and surprises!</div>
+        <a href="https://t.me/goggletrends" target="_blank" class="telegram__btn btn" data-i18n="telegram.button"></a>
     </div>
-
-    <h2>Новости</h2>
-    <div id="news-container"></div>
+    <div class="telegram__image">
+        <img src="images/telegram.webp" alt="Telegram Illustration">
+    </div>
+</div> 
+      <div class="news-index main-width">
+    <div class="news-index__title main-title">
+         <h2>Sports news</h2>
+        <div class="news-index__sort sort">
+            <button class="sort__btn active" id="sort-default">Rising</button>
+            <button class="sort__btn" id="sort-likes">Hot</button>
+            <button class="sort__btn" id="sort-date">New</button>
+        </div>
+   </div>
+   <div class="news-index__list" id="news-container"></div>
+</div>
  
-<script>
-let lastArticles = []; // Сохраняем последние загруженные статьи
-
-async function loadPopular() {
-  const res = await fetch('/popular');
-  const queries = await res.json();
-
-  const mosaic = document.getElementById('mosaic');
-  if (mosaic) {
-    mosaic.innerHTML = '';
-    queries.forEach(q => {
-      const tile = document.createElement('li');
-      tile.className = 'top-trends__item';
-      tile.textContent = q;
-      tile.addEventListener('click', () => loadNews(q));
-      mosaic.appendChild(tile);
-    });
-  }
-}
-
-async function loadNews(topic) {
-  const res = await fetch(`/news?q=${encodeURIComponent(topic)}`);
-  const articles = await res.json();
-
-  // Для теста: добавим случайные лайки и просмотры, если их нет
-  articles.forEach(a => {
-    if (typeof a.likes === 'undefined') a.likes = Math.floor(Math.random() * 1000);
-    if (typeof a.views === 'undefined') a.views = Math.floor(Math.random() * 5000);
-  });
-
-  lastArticles = articles; // Сохраняем оригинальный порядок
-  renderNews(articles);
-}
-
-function renderNews(articles) {
-  const container = document.getElementById('news-container');
-  container.innerHTML = '';
-
-  if (!articles.length) {
-    container.innerHTML = "<p>Новостей не найдено</p>";
-    return;
-  }
-
-  articles.forEach(article => {
-    const item = document.createElement('div');
-    item.className = 'news-item';
-    item.innerHTML = `
-      <h2><a href="${article.url}" target="_blank">${article.title}</a></h2>
-      ${article.imageUrl ? `<img src="${article.imageUrl}" alt="${article.title}">` : ''}
-      <p>${article.description || ''}</p>
-      <small>Опубликовано: ${new Date(article.publishedAt).toLocaleString()}</small>
-      <div>👍 Лайки: ${article.likes ?? 0} | 👁️ Просмотры: ${article.views ?? 0}</div>
-    `;
-    container.appendChild(item);
-  });
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  const input = document.getElementById('search-input');
-  const btn = document.getElementById('search-btn');
-  if (input && btn) {
-    btn.addEventListener('click', () => {
-      const query = input.value.trim();
-      if (query) loadNews(query);
-    });
-    input.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') {
-        const query = input.value.trim();
-        if (query) loadNews(query);
-      }
-    });
-  }
-
-  // Сортировка по умолчанию
-  document.getElementById('sort-default').addEventListener('click', () => {
-    renderNews(lastArticles);
-  });
-
-  // Сортировка по дате (по убыванию)
-  document.getElementById('sort-date').addEventListener('click', () => {
-    const sorted = [...lastArticles].sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
-    renderNews(sorted);
-  });
-
-  // Сортировка по лайкам
-  document.getElementById('sort-likes').addEventListener('click', () => {
-    const sorted = [...lastArticles].sort((a, b) => (b.likes ?? 0) - (a.likes ?? 0));
-    renderNews(sorted);
-  });
-
-  // Сортировка по просмотрам
-  document.getElementById('sort-views').addEventListener('click', () => {
-    const sorted = [...lastArticles].sort((a, b) => (b.views ?? 0) - (a.views ?? 0));
-    renderNews(sorted);
-  });
-
-  loadPopular();
-  loadNews("Galatasaray");
-});
-</script>
+ 
   </main> 
 
   <footer>

@@ -8,7 +8,9 @@
             <div class="top-trends__title">
                 <img src="images/icon-turkey.webp"> Turkey
             </div>
-            <ul id="mosaic">
+            <ul>
+                <li class="top-trends__item top-trends__item--custom">Al Ahly</li>
+                    
             </ul>
         </div>
         <div class="top-trends__list">
@@ -16,16 +18,6 @@
                 <img src="images/icon-az.webp"> Azerbaijan
             </div>
             <ul>
-                <li *ngFor="let trend of trends">
-                <a [href]="trend.url"  class="top-trends__item"><div>{{ trend.name }}</div>
-                    <span>{{ trend.tweet_volume | number }}</span>
-                </a>
-            </li>
-             <li *ngFor="let trend of trends">
-                <a [href]="trend.url" class="top-trends__item top-trends__item--custom"><div>{{ trend.name }}</div>
-                    <span>{{ trend.tweet_volume | number }}</span>
-                </a>
-            </li>
             </ul>
         </div>
         <div class="top-trends__list">
@@ -33,16 +25,7 @@
                 <img src="images/icon-leb.webp"> Lebanon
             </div>
             <ul>
-                <li *ngFor="let trend of trends">
-                <a [href]="trend.url"  class="top-trends__item"><div>{{ trend.name }}</div>
-                    <span>{{ trend.tweet_volume | number }}</span>
-                </a>
-            </li>
-             <li *ngFor="let trend of trends">
-                <a [href]="trend.url" class="top-trends__item top-trends__item--custom"><div>{{ trend.name }}</div>
-                    <span>{{ trend.tweet_volume | number }}</span>
-                </a>
-            </li>
+                
             </ul>
         </div>
     </div>

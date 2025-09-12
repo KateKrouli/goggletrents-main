@@ -39,6 +39,11 @@
       },
       banners: {
         title: "Start winning now!"
+      },
+      telegram: {
+        title: "Stay Connected \u2014 <span>Join Our Telegram</span>",
+        description: "Get the hottest sports stories, trend alerts, and exclusive insights directly in our Telegram channel. Don\u2019t miss out on updates and surprises!",
+        button: "Join Telegram"
       }
     },
     tr: {
@@ -79,6 +84,11 @@
       },
       banners: {
         title: "Kazanmaya \u015Eimdi Ba\u015Fla!"
+      },
+      telegram: {
+        title: "Ba\u011Flant\u0131da Kal\u0131n \u2014 <span>Telegram'a Kat\u0131l\u0131n</span>",
+        description: "En s\u0131cak spor hikayeleri, trend uyar\u0131lar\u0131 ve \xF6zel analizler do\u011Frudan Telegram kanal\u0131m\u0131zda. S\xFCrprizleri ve g\xFCncellemeleri ka\xE7\u0131rmay\u0131n!",
+        button: "Telegram'a Kat\u0131l"
       }
     }
   };
@@ -127,6 +137,9 @@
     document.querySelectorAll('[data-i18n="banners.title"]').forEach((el) => el.textContent = t.banners.title);
     document.querySelectorAll('[data-i18n="xbet.title"]').forEach((el) => el.textContent = t.xbet.title);
     document.querySelectorAll('[data-i18n="xbet.description"]').forEach((el) => el.textContent = t.xbet.description);
+    document.querySelectorAll('[data-i18n="telegram.title"]').forEach((el) => el.innerHTML = t.telegram.title);
+    document.querySelectorAll('[data-i18n="telegram.description"]').forEach((el) => el.textContent = t.telegram.description);
+    document.querySelectorAll('[data-i18n="telegram.button"]').forEach((el) => el.textContent = t.telegram.button);
   }
   document.addEventListener("DOMContentLoaded", function() {
     const lang = getLanguage();
@@ -134,6 +147,154 @@
     setDirection(lang);
   });
   window.setLanguage = setLanguage2;
+
+  // src/js/news.js
+  var lastArticles = [];
+  async function loadPopularAll() {
+    const res = await fetch("/popular/all");
+    const data = await res.json();
+    const customItems = {
+      turkey: {
+        text: "Al Ahly",
+        url: "https://galatasaray.org/"
+      },
+      azerbaijan: {
+        text: "Al Ahly",
+        url: "https://qarabagh.com/"
+      },
+      lebanon: {
+        text: "Al Ahly",
+        url: "https://www.lebanon.com/"
+      }
+    };
+    function insertCustomRandomly(arr, customLi) {
+      const pos = Math.floor(Math.random() * (arr.length + 1));
+      arr.splice(pos, 0, customLi);
+      return arr;
+    }
+    const turkeyUl = document.querySelector(".top-trends__list:nth-child(1) ul");
+    if (turkeyUl) {
+      turkeyUl.innerHTML = "";
+      const lis = data.turkey.map((q) => {
+        const li = document.createElement("li");
+        li.className = "top-trends__item";
+        li.textContent = q;
+        li.addEventListener("click", () => loadNews(q));
+        return li;
+      });
+      const customLi = document.createElement("li");
+      customLi.className = "top-trends__item top-trends__item--custom";
+      customLi.innerHTML = `<a href="${customItems.turkey.url}" target="_blank">${customItems.turkey.text}</a>`;
+      insertCustomRandomly(lis, customLi).forEach((li) => turkeyUl.appendChild(li));
+    }
+    const azUl = document.querySelector(".top-trends__list:nth-child(2) ul");
+    if (azUl) {
+      azUl.innerHTML = "";
+      const lis = data.azerbaijan.map((q) => {
+        const li = document.createElement("li");
+        li.className = "top-trends__item";
+        li.textContent = q;
+        li.addEventListener("click", () => loadNews(q));
+        return li;
+      });
+      const customLi = document.createElement("li");
+      customLi.className = "top-trends__item top-trends__item--custom";
+      customLi.innerHTML = `<a href="${customItems.azerbaijan.url}" target="_blank">${customItems.azerbaijan.text}</a>`;
+      insertCustomRandomly(lis, customLi).forEach((li) => azUl.appendChild(li));
+    }
+    const lebUl = document.querySelector(".top-trends__list:nth-child(3) ul");
+    if (lebUl) {
+      lebUl.innerHTML = "";
+      const lis = data.lebanon.map((q) => {
+        const li = document.createElement("li");
+        li.className = "top-trends__item";
+        li.textContent = q;
+        li.addEventListener("click", () => loadNews(q));
+        return li;
+      });
+      const customLi = document.createElement("li");
+      customLi.className = "top-trends__item top-trends__item--custom";
+      customLi.innerHTML = `<a href="${customItems.lebanon.url}" target="_blank">${customItems.lebanon.text}</a>`;
+      insertCustomRandomly(lis, customLi).forEach((li) => lebUl.appendChild(li));
+    }
+  }
+  async function loadNews(topic) {
+    const res = await fetch(`/news?q=${encodeURIComponent(topic)}`);
+    const articles = await res.json();
+    articles.forEach((a) => {
+      if (typeof a.likes === "undefined")
+        a.likes = Math.floor(Math.random() * 1e3);
+      if (typeof a.views === "undefined")
+        a.views = Math.floor(Math.random() * 5e3);
+    });
+    lastArticles = articles;
+    renderNews(articles);
+  }
+  function renderNews(articles) {
+    const container = document.getElementById("news-container");
+    container.innerHTML = "";
+    if (!articles.length) {
+      container.innerHTML = "<p>\u041D\u043E\u0432\u043E\u0441\u0442\u0435\u0439 \u043D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D\u043E</p>";
+      return;
+    }
+    articles.forEach((article) => {
+      const item = document.createElement("div");
+      item.className = "news-item";
+      item.innerHTML = `
+      ${article.imageUrl ? `<div class="news-item__image" style="background-image:url(${article.imageUrl})"></div>` : ""}
+      <div class="news-item__content">
+      <h3><a href="${article.url}" target="_blank">${article.title}</a></h3>
+      <p>${article.description || ""}</p>
+      <small>\u041E\u043F\u0443\u0431\u043B\u0438\u043A\u043E\u0432\u0430\u043D\u043E: ${new Date(article.publishedAt).toLocaleString()}</small>
+      </div>
+      ${article.imageUrl ? `</div>` : ""}
+      <div class="news-item__summary">\u{1F44D} \u041B\u0430\u0439\u043A\u0438: ${article.likes ?? 0} | \u{1F441}\uFE0F \u041F\u0440\u043E\u0441\u043C\u043E\u0442\u0440\u044B: ${article.views ?? 0}</div>
+    `;
+      container.appendChild(item);
+    });
+  }
+  document.addEventListener("DOMContentLoaded", () => {
+    const input = document.getElementById("search-input");
+    const btn = document.getElementById("search-btn");
+    if (input && btn) {
+      btn.addEventListener("click", () => {
+        const query = input.value.trim();
+        if (query)
+          loadNews(query);
+      });
+      input.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          const query = input.value.trim();
+          if (query)
+            loadNews(query);
+        }
+      });
+    }
+    function setActiveSort(btnId) {
+      document.querySelectorAll("#sort-default, #sort-date, #sort-likes, #sort-views").forEach((btn3) => {
+        btn3.classList.remove("active");
+      });
+      const btn2 = document.getElementById(btnId);
+      if (btn2)
+        btn2.classList.add("active");
+    }
+    document.getElementById("sort-default").addEventListener("click", () => {
+      renderNews(lastArticles);
+      setActiveSort("sort-default");
+    });
+    document.getElementById("sort-date").addEventListener("click", () => {
+      const sorted = [...lastArticles].sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
+      renderNews(sorted);
+      setActiveSort("sort-date");
+    });
+    document.getElementById("sort-likes").addEventListener("click", () => {
+      const sorted = [...lastArticles].sort((a, b) => (b.likes ?? 0) - (a.likes ?? 0));
+      renderNews(sorted);
+      setActiveSort("sort-likes");
+    });
+    loadPopularAll();
+    loadNews("Galatasaray");
+  });
 
   // node_modules/swiper/shared/ssr-window.esm.mjs
   function isObject(obj) {

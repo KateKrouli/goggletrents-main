@@ -39,6 +39,11 @@
       },
       banners: {
         title: "Start winning now!"
+      },
+      telegram: {
+        title: "Stay Connected \u2014 <span>Join Our Telegram</span>",
+        description: "Get the hottest sports stories, trend alerts, and exclusive insights directly in our Telegram channel. Don\u2019t miss out on updates and surprises!",
+        button: "Join Telegram"
       }
     },
     tr: {
@@ -79,6 +84,11 @@
       },
       banners: {
         title: "Kazanmaya \u015Eimdi Ba\u015Fla!"
+      },
+      telegram: {
+        title: "Ba\u011Flant\u0131da Kal\u0131n \u2014 <span>Telegram'a Kat\u0131l\u0131n</span>",
+        description: "En s\u0131cak spor hikayeleri, trend uyar\u0131lar\u0131 ve \xF6zel analizler do\u011Frudan Telegram kanal\u0131m\u0131zda. S\xFCrprizleri ve g\xFCncellemeleri ka\xE7\u0131rmay\u0131n!",
+        button: "Telegram'a Kat\u0131l"
       }
     }
   };
@@ -127,6 +137,9 @@
     document.querySelectorAll('[data-i18n="banners.title"]').forEach((el) => el.textContent = t.banners.title);
     document.querySelectorAll('[data-i18n="xbet.title"]').forEach((el) => el.textContent = t.xbet.title);
     document.querySelectorAll('[data-i18n="xbet.description"]').forEach((el) => el.textContent = t.xbet.description);
+    document.querySelectorAll('[data-i18n="telegram.title"]').forEach((el) => el.innerHTML = t.telegram.title);
+    document.querySelectorAll('[data-i18n="telegram.description"]').forEach((el) => el.textContent = t.telegram.description);
+    document.querySelectorAll('[data-i18n="telegram.button"]').forEach((el) => el.textContent = t.telegram.button);
   }
   document.addEventListener("DOMContentLoaded", function() {
     const lang = getLanguage();

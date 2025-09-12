@@ -60,7 +60,7 @@ app.get("/popular", async (req, res) => {
 // Новости по теме
 app.get("/news", async (req, res) => {
   try {
-    const topic = req.query.q || "Galatasaray";
+    const topic = req.query.q || "Türkiye spor";
     const url = `https://newsapi.org/v2/everything?q=${encodeURIComponent(topic)}&apiKey=${API_KEY}`;
     const response = await axios.get(url);
 
@@ -92,11 +92,8 @@ app.get("/news", async (req, res) => {
 app.get("/popular/all", (req, res) => {
   res.json({
     turkey: [
-      "Galatasaray",
-      "Fenerbahce",
       "UEFA",
       "Champions League",
-      "Istanbul",
       "Beşiktaş",
       "Trabzonspor"
     ],
@@ -104,17 +101,11 @@ app.get("/popular/all", (req, res) => {
       "Baku",
       "Qarabag FK",
       "Azerbaijan Grand Prix",
-      "Shusha",
-      "Nizami",
-      "Bakcell",
       "Nar Mobile"
     ],
     lebanon: [
       "Beirut",
       "Lebanon news",
-      "Cedar",
-      "Tripoli",
-      "Byblos",
       "Lebanese cuisine",
       "Rafic Hariri"
     ]

@@ -40,6 +40,11 @@ const translations = {
     banners: {
       title: "Start winning now!"
     },
+    telegram: {
+      title: "Stay Connected — <span>Join Our Telegram</span>",
+      description: "Get the hottest sports stories, trend alerts, and exclusive insights directly in our Telegram channel. Don’t miss out on updates and surprises!",
+      button: "Join Telegram"
+    }
   }, 
   tr: {
     header: {
@@ -80,6 +85,11 @@ const translations = {
     banners: {
       title: "Kazanmaya Şimdi Başla!"
     },
+    telegram: {
+      title: "Bağlantıda Kalın — <span>Telegram'a Katılın</span>",
+      description: "En sıcak spor hikayeleri, trend uyarıları ve özel analizler doğrudan Telegram kanalımızda. Sürprizleri ve güncellemeleri kaçırmayın!",
+      button: "Telegram'a Katıl"
+    }
   }
 };
 
@@ -141,6 +151,10 @@ function applyTranslations(lang) {
   // XBet
   document.querySelectorAll('[data-i18n="xbet.title"]').forEach(el => el.textContent = t.xbet.title);
   document.querySelectorAll('[data-i18n="xbet.description"]').forEach(el => el.textContent = t.xbet.description);
+  // Telegram
+  document.querySelectorAll('[data-i18n="telegram.title"]').forEach(el => el.innerHTML = t.telegram.title);
+  document.querySelectorAll('[data-i18n="telegram.description"]').forEach(el => el.textContent = t.telegram.description);
+  document.querySelectorAll('[data-i18n="telegram.button"]').forEach(el => el.textContent = t.telegram.button);
 } 
 
 
