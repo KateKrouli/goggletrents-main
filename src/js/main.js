@@ -1,9 +1,6 @@
 
 import './lang.js';
 import './news.js';
-import './swiper-init.js'
-
-
 
 
 // // Динамически подгружать блок статей для выбранного языка через fetch

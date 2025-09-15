@@ -829,10 +829,10 @@
       if (typeof handler !== "function")
         return self;
       const method = priority ? "unshift" : "push";
-      events2.split(" ").forEach((event) => {
-        if (!self.eventsListeners[event])
-          self.eventsListeners[event] = [];
-        self.eventsListeners[event][method](handler);
+      events2.split(" ").forEach((event2) => {
+        if (!self.eventsListeners[event2])
+          self.eventsListeners[event2] = [];
+        self.eventsListeners[event2][method](handler);
       });
       return self;
     },
@@ -885,13 +885,13 @@
         return self;
       if (!self.eventsListeners)
         return self;
-      events2.split(" ").forEach((event) => {
+      events2.split(" ").forEach((event2) => {
         if (typeof handler === "undefined") {
-          self.eventsListeners[event] = [];
-        } else if (self.eventsListeners[event]) {
-          self.eventsListeners[event].forEach((eventHandler, index) => {
+          self.eventsListeners[event2] = [];
+        } else if (self.eventsListeners[event2]) {
+          self.eventsListeners[event2].forEach((eventHandler, index) => {
             if (eventHandler === handler || eventHandler.__emitterProxy && eventHandler.__emitterProxy === handler) {
-              self.eventsListeners[event].splice(index, 1);
+              self.eventsListeners[event2].splice(index, 1);
             }
           });
         }
@@ -921,14 +921,14 @@
       }
       data.unshift(context);
       const eventsArray = Array.isArray(events2) ? events2 : events2.split(" ");
-      eventsArray.forEach((event) => {
+      eventsArray.forEach((event2) => {
         if (self.eventsAnyListeners && self.eventsAnyListeners.length) {
           self.eventsAnyListeners.forEach((eventHandler) => {
-            eventHandler.apply(context, [event, ...data]);
+            eventHandler.apply(context, [event2, ...data]);
           });
         }
-        if (self.eventsListeners && self.eventsListeners[event]) {
-          self.eventsListeners[event].forEach((eventHandler) => {
+        if (self.eventsListeners && self.eventsListeners[event2]) {
+          self.eventsListeners[event2].forEach((eventHandler) => {
             eventHandler.apply(context, data);
           });
         }
@@ -2749,7 +2749,7 @@
     }
     return __closestFrom(base);
   }
-  function preventEdgeSwipe(swiper, event, startX) {
+  function preventEdgeSwipe(swiper, event2, startX) {
     const window2 = getWindow();
     const {
       params
@@ -2758,17 +2758,17 @@
     const edgeSwipeThreshold = params.edgeSwipeThreshold;
     if (edgeSwipeDetection && (startX <= edgeSwipeThreshold || startX >= window2.innerWidth - edgeSwipeThreshold)) {
       if (edgeSwipeDetection === "prevent") {
-        event.preventDefault();
+        event2.preventDefault();
         return true;
       }
       return false;
     }
     return true;
   }
-  function onTouchStart(event) {
+  function onTouchStart(event2) {
     const swiper = this;
     const document2 = getDocument();
-    let e = event;
+    let e = event2;
     if (e.originalEvent)
       e = e.originalEvent;
     const data = swiper.touchEventsData;
@@ -2866,7 +2866,7 @@
     }
     swiper.emit("touchStart", e);
   }
-  function onTouchMove(event) {
+  function onTouchMove(event2) {
     const document2 = getDocument();
     const swiper = this;
     const data = swiper.touchEventsData;
@@ -2878,9 +2878,9 @@
     } = swiper;
     if (!enabled)
       return;
-    if (!params.simulateTouch && event.pointerType === "mouse")
+    if (!params.simulateTouch && event2.pointerType === "mouse")
       return;
-    let e = event;
+    let e = event2;
     if (e.originalEvent)
       e = e.originalEvent;
     if (e.type === "pointermove") {
@@ -3124,10 +3124,10 @@
     swiper.updateProgress(data.currentTranslate);
     swiper.setTranslate(data.currentTranslate);
   }
-  function onTouchEnd(event) {
+  function onTouchEnd(event2) {
     const swiper = this;
     const data = swiper.touchEventsData;
-    let e = event;
+    let e = event2;
     if (e.originalEvent)
       e = e.originalEvent;
     let targetTouch;
@@ -4458,7 +4458,325 @@
   });
   Swiper.use([Resize, Observer]);
 
+  // node_modules/swiper/modules/autoplay.mjs
+  function Autoplay(_ref) {
+    let {
+      swiper,
+      extendParams,
+      on,
+      emit,
+      params
+    } = _ref;
+    swiper.autoplay = {
+      running: false,
+      paused: false,
+      timeLeft: 0
+    };
+    extendParams({
+      autoplay: {
+        enabled: false,
+        delay: 3e3,
+        waitForTransition: true,
+        disableOnInteraction: false,
+        stopOnLastSlide: false,
+        reverseDirection: false,
+        pauseOnMouseEnter: false
+      }
+    });
+    let timeout;
+    let raf;
+    let autoplayDelayTotal = params && params.autoplay ? params.autoplay.delay : 3e3;
+    let autoplayDelayCurrent = params && params.autoplay ? params.autoplay.delay : 3e3;
+    let autoplayTimeLeft;
+    let autoplayStartTime = (/* @__PURE__ */ new Date()).getTime();
+    let wasPaused;
+    let isTouched;
+    let pausedByTouch;
+    let touchStartTimeout;
+    let slideChanged;
+    let pausedByInteraction;
+    let pausedByPointerEnter;
+    function onTransitionEnd(e) {
+      if (!swiper || swiper.destroyed || !swiper.wrapperEl)
+        return;
+      if (e.target !== swiper.wrapperEl)
+        return;
+      swiper.wrapperEl.removeEventListener("transitionend", onTransitionEnd);
+      if (pausedByPointerEnter || e.detail && e.detail.bySwiperTouchMove) {
+        return;
+      }
+      resume();
+    }
+    const calcTimeLeft = () => {
+      if (swiper.destroyed || !swiper.autoplay.running)
+        return;
+      if (swiper.autoplay.paused) {
+        wasPaused = true;
+      } else if (wasPaused) {
+        autoplayDelayCurrent = autoplayTimeLeft;
+        wasPaused = false;
+      }
+      const timeLeft = swiper.autoplay.paused ? autoplayTimeLeft : autoplayStartTime + autoplayDelayCurrent - (/* @__PURE__ */ new Date()).getTime();
+      swiper.autoplay.timeLeft = timeLeft;
+      emit("autoplayTimeLeft", timeLeft, timeLeft / autoplayDelayTotal);
+      raf = requestAnimationFrame(() => {
+        calcTimeLeft();
+      });
+    };
+    const getSlideDelay = () => {
+      let activeSlideEl;
+      if (swiper.virtual && swiper.params.virtual.enabled) {
+        activeSlideEl = swiper.slides.find((slideEl) => slideEl.classList.contains("swiper-slide-active"));
+      } else {
+        activeSlideEl = swiper.slides[swiper.activeIndex];
+      }
+      if (!activeSlideEl)
+        return void 0;
+      const currentSlideDelay = parseInt(activeSlideEl.getAttribute("data-swiper-autoplay"), 10);
+      return currentSlideDelay;
+    };
+    const run = (delayForce) => {
+      if (swiper.destroyed || !swiper.autoplay.running)
+        return;
+      cancelAnimationFrame(raf);
+      calcTimeLeft();
+      let delay = typeof delayForce === "undefined" ? swiper.params.autoplay.delay : delayForce;
+      autoplayDelayTotal = swiper.params.autoplay.delay;
+      autoplayDelayCurrent = swiper.params.autoplay.delay;
+      const currentSlideDelay = getSlideDelay();
+      if (!Number.isNaN(currentSlideDelay) && currentSlideDelay > 0 && typeof delayForce === "undefined") {
+        delay = currentSlideDelay;
+        autoplayDelayTotal = currentSlideDelay;
+        autoplayDelayCurrent = currentSlideDelay;
+      }
+      autoplayTimeLeft = delay;
+      const speed = swiper.params.speed;
+      const proceed = () => {
+        if (!swiper || swiper.destroyed)
+          return;
+        if (swiper.params.autoplay.reverseDirection) {
+          if (!swiper.isBeginning || swiper.params.loop || swiper.params.rewind) {
+            swiper.slidePrev(speed, true, true);
+            emit("autoplay");
+          } else if (!swiper.params.autoplay.stopOnLastSlide) {
+            swiper.slideTo(swiper.slides.length - 1, speed, true, true);
+            emit("autoplay");
+          }
+        } else {
+          if (!swiper.isEnd || swiper.params.loop || swiper.params.rewind) {
+            swiper.slideNext(speed, true, true);
+            emit("autoplay");
+          } else if (!swiper.params.autoplay.stopOnLastSlide) {
+            swiper.slideTo(0, speed, true, true);
+            emit("autoplay");
+          }
+        }
+        if (swiper.params.cssMode) {
+          autoplayStartTime = (/* @__PURE__ */ new Date()).getTime();
+          requestAnimationFrame(() => {
+            run();
+          });
+        }
+      };
+      if (delay > 0) {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => {
+          proceed();
+        }, delay);
+      } else {
+        requestAnimationFrame(() => {
+          proceed();
+        });
+      }
+      return delay;
+    };
+    const start = () => {
+      autoplayStartTime = (/* @__PURE__ */ new Date()).getTime();
+      swiper.autoplay.running = true;
+      run();
+      emit("autoplayStart");
+    };
+    const stop = () => {
+      swiper.autoplay.running = false;
+      clearTimeout(timeout);
+      cancelAnimationFrame(raf);
+      emit("autoplayStop");
+    };
+    const pause = (internal, reset) => {
+      if (swiper.destroyed || !swiper.autoplay.running)
+        return;
+      clearTimeout(timeout);
+      if (!internal) {
+        pausedByInteraction = true;
+      }
+      const proceed = () => {
+        emit("autoplayPause");
+        if (swiper.params.autoplay.waitForTransition) {
+          swiper.wrapperEl.addEventListener("transitionend", onTransitionEnd);
+        } else {
+          resume();
+        }
+      };
+      swiper.autoplay.paused = true;
+      if (reset) {
+        if (slideChanged) {
+          autoplayTimeLeft = swiper.params.autoplay.delay;
+        }
+        slideChanged = false;
+        proceed();
+        return;
+      }
+      const delay = autoplayTimeLeft || swiper.params.autoplay.delay;
+      autoplayTimeLeft = delay - ((/* @__PURE__ */ new Date()).getTime() - autoplayStartTime);
+      if (swiper.isEnd && autoplayTimeLeft < 0 && !swiper.params.loop)
+        return;
+      if (autoplayTimeLeft < 0)
+        autoplayTimeLeft = 0;
+      proceed();
+    };
+    const resume = () => {
+      if (swiper.isEnd && autoplayTimeLeft < 0 && !swiper.params.loop || swiper.destroyed || !swiper.autoplay.running)
+        return;
+      autoplayStartTime = (/* @__PURE__ */ new Date()).getTime();
+      if (pausedByInteraction) {
+        pausedByInteraction = false;
+        run(autoplayTimeLeft);
+      } else {
+        run();
+      }
+      swiper.autoplay.paused = false;
+      emit("autoplayResume");
+    };
+    const onVisibilityChange = () => {
+      if (swiper.destroyed || !swiper.autoplay.running)
+        return;
+      const document2 = getDocument();
+      if (document2.visibilityState === "hidden") {
+        pausedByInteraction = true;
+        pause(true);
+      }
+      if (document2.visibilityState === "visible") {
+        resume();
+      }
+    };
+    const onPointerEnter = (e) => {
+      if (e.pointerType !== "mouse")
+        return;
+      pausedByInteraction = true;
+      pausedByPointerEnter = true;
+      if (swiper.animating || swiper.autoplay.paused)
+        return;
+      pause(true);
+    };
+    const onPointerLeave = (e) => {
+      if (e.pointerType !== "mouse")
+        return;
+      pausedByPointerEnter = false;
+      if (swiper.autoplay.paused) {
+        resume();
+      }
+    };
+    const attachMouseEvents = () => {
+      if (swiper.params.autoplay.pauseOnMouseEnter) {
+        swiper.el.addEventListener("pointerenter", onPointerEnter);
+        swiper.el.addEventListener("pointerleave", onPointerLeave);
+      }
+    };
+    const detachMouseEvents = () => {
+      if (swiper.el && typeof swiper.el !== "string") {
+        swiper.el.removeEventListener("pointerenter", onPointerEnter);
+        swiper.el.removeEventListener("pointerleave", onPointerLeave);
+      }
+    };
+    const attachDocumentEvents = () => {
+      const document2 = getDocument();
+      document2.addEventListener("visibilitychange", onVisibilityChange);
+    };
+    const detachDocumentEvents = () => {
+      const document2 = getDocument();
+      document2.removeEventListener("visibilitychange", onVisibilityChange);
+    };
+    on("init", () => {
+      if (swiper.params.autoplay.enabled) {
+        attachMouseEvents();
+        attachDocumentEvents();
+        start();
+      }
+    });
+    on("destroy", () => {
+      detachMouseEvents();
+      detachDocumentEvents();
+      if (swiper.autoplay.running) {
+        stop();
+      }
+    });
+    on("_freeModeStaticRelease", () => {
+      if (pausedByTouch || pausedByInteraction) {
+        resume();
+      }
+    });
+    on("_freeModeNoMomentumRelease", () => {
+      if (!swiper.params.autoplay.disableOnInteraction) {
+        pause(true, true);
+      } else {
+        stop();
+      }
+    });
+    on("beforeTransitionStart", (_s, speed, internal) => {
+      if (swiper.destroyed || !swiper.autoplay.running)
+        return;
+      if (internal || !swiper.params.autoplay.disableOnInteraction) {
+        pause(true, true);
+      } else {
+        stop();
+      }
+    });
+    on("sliderFirstMove", () => {
+      if (swiper.destroyed || !swiper.autoplay.running)
+        return;
+      if (swiper.params.autoplay.disableOnInteraction) {
+        stop();
+        return;
+      }
+      isTouched = true;
+      pausedByTouch = false;
+      pausedByInteraction = false;
+      touchStartTimeout = setTimeout(() => {
+        pausedByInteraction = true;
+        pausedByTouch = true;
+        pause(true);
+      }, 200);
+    });
+    on("touchEnd", () => {
+      if (swiper.destroyed || !swiper.autoplay.running || !isTouched)
+        return;
+      clearTimeout(touchStartTimeout);
+      clearTimeout(timeout);
+      if (swiper.params.autoplay.disableOnInteraction) {
+        pausedByTouch = false;
+        isTouched = false;
+        return;
+      }
+      if (pausedByTouch && swiper.params.cssMode)
+        resume();
+      pausedByTouch = false;
+      isTouched = false;
+    });
+    on("slideChange", () => {
+      if (swiper.destroyed || !swiper.autoplay.running)
+        return;
+      slideChanged = true;
+    });
+    Object.assign(swiper.autoplay, {
+      start,
+      stop,
+      pause,
+      resume
+    });
+  }
+
   // src/js/news.js
+  var topNewsSwiper = null;
   async function loadTopTurkeyNews() {
     const res = await fetch("/news?q=Turkey");
     const articles = await res.json();
@@ -4480,7 +4798,11 @@
     `;
       container.appendChild(slide2);
     });
-    new Swiper(".top-news__slider.swiper-container", {
+    if (topNewsSwiper) {
+      topNewsSwiper.destroy(true, true);
+    }
+    topNewsSwiper = new Swiper(".top-news__slider", {
+      modules: [Autoplay],
       slidesPerView: 1,
       spaceBetween: 20,
       slidesToScroll: 1,
@@ -4637,9 +4959,16 @@
     loadPopularAll();
     loadNews("Galatasaray");
     loadTopTurkeyNews();
-  });
-
-  // src/js/swiper-init.js
-  document.addEventListener("DOMContentLoaded", function() {
+    document.querySelectorAll(".top-trends__list ul").forEach((ul) => {
+      ul.addEventListener("click", function(e) {
+        const li = e.target.closest("li");
+        if (!li)
+          return;
+        const h2 = document.querySelector(".news-index__title h2");
+        if (h2 && li.textContent.trim()) {
+          h2.textContent = li.textContent.trim();
+        }
+      });
+    });
   });
 })();

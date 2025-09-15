@@ -29,11 +29,10 @@ async function loadTopTurkeyNews() {
   if (topNewsSwiper) {
     topNewsSwiper.destroy(true, true);
   }
-  topNewsSwiper = new Swiper('.top-news__slider', {
+  topNewsSwiper = new Swiper('.top-news__slider.swiper-container', {
     modules: [Autoplay],
-    slidesPerView: 1, 
+    slidesPerView: 1,
     spaceBetween: 20,
-    slidesToScroll: 1,
     loop: true,
     autoplay: {
       delay: 3500,
