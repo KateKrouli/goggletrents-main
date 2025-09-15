@@ -147,88 +147,18 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 </script>
-  <main>
-      
-<div class="main-block main-width">
-    <div class="main-block__content">
-        <h1 data-i18n="main.title" class="main-block__title">Go OG — Follow the Trends</h1>
-        <div data-i18n="main.description" class="main-block__description">A community-driven platform discovering and tracking sports content across MENA.</div>
-        <div class="main-block__search">
-            <div class="main-block__form">
-                <button type="submit" class="main-block__btn" id="search-btn">
-                </button>
-                <input data-i18n-placeholder="main.button" id="search-input" name="search" type="text" class="main-block__input" placeholder="Search Trends & News">
-            </div>
-        </div>
-    </div>
-    <div class="top-news"> 
-        <div class="top-news__slider swiper-container">
-            <div class="swiper-wrapper" id="top-news-list">
-                <!-- Новости по Турции будут подгружаться динамически -->
-            </div>
-        </div>
-    </div>
-</div>   
-      <div class="top-trends main-width">
-    <div class="main-title">
-        <h2>Top Trends</h2>
-        <span>Real-time tracking of the hottest sports topics across </span>
-    </div>
-    <div class="top-trends__container">
-        <div class="top-trends__list">
-            <div class="top-trends__title">
-                <img src="images/icon-turkey.webp"> Turkey
-            </div>
-            <ul>
-                <li class="top-trends__item top-trends__item--custom">Al Ahly</li>
-                    
-            </ul>
-        </div>
-        <div class="top-trends__list">
-            <div class="top-trends__title">
-                <img src="images/icon-az.webp"> Azerbaijan
-            </div>
-            <ul>
-            </ul>
-        </div>
-        <div class="top-trends__list">
-            <div class="top-trends__title">
-                <img src="images/icon-leb.webp"> Lebanon
-            </div>
-            <ul>
-                
-            </ul>
-        </div>
-    </div>
-</div>  
-      <div class="telegram main-width">
-    <div class="telegram__content">
-        <h2 data-i18n="telegram.title" class="telegram__title">Stay Connected — <span>Join Our Telegram</span></h2>
-        <div data-i18n="telegram.description" class="telegram__description">Get the hottest sports stories, trend alerts, and exclusive insights directly in our Telegram channel. Don’t miss out on updates and surprises!</div>
-        <a href="https://t.me/goggletrends" target="_blank" class="telegram__btn btn" data-i18n="telegram.button"></a>
-    </div>
-    <div class="telegram__image">
-        <img src="images/telegram.webp" alt="Telegram Illustration">
-    </div>
-</div> 
-      <div class="news-index main-width">
-    <div class="news-index__title main-title">
-         <h2>Sports news</h2>
-        <div class="news-index__sort sort">
-            <button class="sort__btn active" id="sort-default">Rising</button>
-            <button class="sort__btn" id="sort-likes">Hot</button>
-            <button class="sort__btn" id="sort-date">New</button>
-        </div>
-   </div>
-   <div class="news-index__list" id="news-container"></div>
-   <a href="" class="btn news-index__btn">
-    View all posts
-   </a>
-</div>
- 
- 
-  </main> 
+  <main> 
+    <div class="search-page main-width">
+      <div class="search-page__form">
+       <input data-i18n-placeholder="main.button" id="search-input" name="search" type="text" class="main-block__input" placeholder="Search Trends & News">
+        <button type="submit" class="main-block__btn" id="search-btn"></button>
+      </div>
+      <div class="news-index__list" id="search-results-container"></div>
+      <a href="" class="btn news-index__btn">
+        View all posts
+      </a>
 
+   </div></main> 
   <footer>
     <div class="footer main-width">
        © 2025 googletrends.bet — Your hub for sports & trends. All rights reserved.

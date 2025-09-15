@@ -72,15 +72,21 @@ app.get("/news", async (req, res) => {
       publishedAt: article.publishedAt
     }));
 
-    // Вставляем кастомные новости на первую и третью позиции
-    articles = [customNews[0], ...articles];
-    if (articles.length >= 2) {
-      articles.splice(2, 0, customNews[1]);
-    } else {
-      articles.push(customNews[1]);
-    }
 
-    res.json(articles);
+      // Вставляем кастомные новости на вторую и седьмую позиции
+      if (articles.length >= 1) {
+        articles.splice(1, 0, customNews[0]);
+      } else {
+        articles.push(customNews[0]);
+      }
+
+      if (articles.length >= 6) {
+        articles.splice(6, 0, customNews[1]);
+      } else {
+        articles.push(customNews[1]);
+      }
+
+  res.json(articles.slice(0, 15));
   } catch (err) {
     console.error(err);
     // Возвращаем только кастомные новости при ошибке

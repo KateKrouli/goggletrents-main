@@ -92,7 +92,7 @@
       }
     }
   };
-  function setLanguage2(lang) {
+  function setLanguage(lang) {
     localStorage.setItem("lang", lang);
     applyTranslations(lang);
     setDirection(lang);
@@ -146,155 +146,7 @@
     applyTranslations(lang);
     setDirection(lang);
   });
-  window.setLanguage = setLanguage2;
-
-  // src/js/news.js
-  var lastArticles = [];
-  async function loadPopularAll() {
-    const res = await fetch("/popular/all");
-    const data = await res.json();
-    const customItems = {
-      turkey: {
-        text: "Al Ahly",
-        url: "https://galatasaray.org/"
-      },
-      azerbaijan: {
-        text: "Al Ahly",
-        url: "https://qarabagh.com/"
-      },
-      lebanon: {
-        text: "Al Ahly",
-        url: "https://www.lebanon.com/"
-      }
-    };
-    function insertCustomRandomly(arr, customLi) {
-      const pos = Math.floor(Math.random() * (arr.length + 1));
-      arr.splice(pos, 0, customLi);
-      return arr;
-    }
-    const turkeyUl = document.querySelector(".top-trends__list:nth-child(1) ul");
-    if (turkeyUl) {
-      turkeyUl.innerHTML = "";
-      const lis = data.turkey.map((q) => {
-        const li = document.createElement("li");
-        li.className = "top-trends__item";
-        li.textContent = q;
-        li.addEventListener("click", () => loadNews(q));
-        return li;
-      });
-      const customLi = document.createElement("li");
-      customLi.className = "top-trends__item top-trends__item--custom";
-      customLi.innerHTML = `<a href="${customItems.turkey.url}" target="_blank">${customItems.turkey.text}</a>`;
-      insertCustomRandomly(lis, customLi).forEach((li) => turkeyUl.appendChild(li));
-    }
-    const azUl = document.querySelector(".top-trends__list:nth-child(2) ul");
-    if (azUl) {
-      azUl.innerHTML = "";
-      const lis = data.azerbaijan.map((q) => {
-        const li = document.createElement("li");
-        li.className = "top-trends__item";
-        li.textContent = q;
-        li.addEventListener("click", () => loadNews(q));
-        return li;
-      });
-      const customLi = document.createElement("li");
-      customLi.className = "top-trends__item top-trends__item--custom";
-      customLi.innerHTML = `<a href="${customItems.azerbaijan.url}" target="_blank">${customItems.azerbaijan.text}</a>`;
-      insertCustomRandomly(lis, customLi).forEach((li) => azUl.appendChild(li));
-    }
-    const lebUl = document.querySelector(".top-trends__list:nth-child(3) ul");
-    if (lebUl) {
-      lebUl.innerHTML = "";
-      const lis = data.lebanon.map((q) => {
-        const li = document.createElement("li");
-        li.className = "top-trends__item";
-        li.textContent = q;
-        li.addEventListener("click", () => loadNews(q));
-        return li;
-      });
-      const customLi = document.createElement("li");
-      customLi.className = "top-trends__item top-trends__item--custom";
-      customLi.innerHTML = `<a href="${customItems.lebanon.url}" target="_blank">${customItems.lebanon.text}</a>`;
-      insertCustomRandomly(lis, customLi).forEach((li) => lebUl.appendChild(li));
-    }
-  }
-  async function loadNews(topic) {
-    const res = await fetch(`/news?q=${encodeURIComponent(topic)}`);
-    const articles = await res.json();
-    articles.forEach((a) => {
-      if (typeof a.likes === "undefined")
-        a.likes = Math.floor(Math.random() * 1e3);
-      if (typeof a.views === "undefined")
-        a.views = Math.floor(Math.random() * 5e3);
-    });
-    lastArticles = articles;
-    renderNews(articles);
-  }
-  function renderNews(articles) {
-    const container = document.getElementById("news-container");
-    container.innerHTML = "";
-    if (!articles.length) {
-      container.innerHTML = "<p>\u041D\u043E\u0432\u043E\u0441\u0442\u0435\u0439 \u043D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D\u043E</p>";
-      return;
-    }
-    articles.forEach((article) => {
-      const item = document.createElement("div");
-      const isCustom = article.title === "\u0413\u0430\u043B\u0430\u0446\u0430\u0441\u0430\u0440\u0430\u0439 \u0432\u044B\u0438\u0433\u0440\u0430\u043B \u0432\u0430\u0436\u043D\u044B\u0439 \u043C\u0430\u0442\u0447!" || article.title === "\u0418\u043D\u0442\u0435\u0440\u0432\u044C\u044E \u0441 \u0442\u0440\u0435\u043D\u0435\u0440\u043E\u043C \u0413\u0430\u043B\u0430\u0446\u0430\u0441\u0430\u0440\u0430\u044F";
-      item.className = "news-item" + (isCustom ? " news-item--custom" : "");
-      item.innerHTML = `
-      ${article.imageUrl ? `<div class="news-item__image" style="background-image:url(${article.imageUrl})"></div>` : ""}
-      <div class="news-item__content">
-      <h3><a href="${article.url}" target="_blank">${article.title}</a></h3>
-      <p>${article.description || ""}</p>
-      <small>${new Date(article.publishedAt).toLocaleString()}</small>
-      </div>
-      <div class="news-item__summary">\u{1F44D} \u041B\u0430\u0439\u043A\u0438: ${article.likes ?? 0} | \u{1F441}\uFE0F \u041F\u0440\u043E\u0441\u043C\u043E\u0442\u0440\u044B: ${article.views ?? 0}</div>
-    `;
-      container.appendChild(item);
-    });
-  }
-  document.addEventListener("DOMContentLoaded", () => {
-    const input = document.getElementById("search-input");
-    const btn = document.getElementById("search-btn");
-    if (input && btn) {
-      btn.addEventListener("click", () => {
-        const query = input.value.trim();
-        if (query)
-          loadNews(query);
-      });
-      input.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") {
-          const query = input.value.trim();
-          if (query)
-            loadNews(query);
-        }
-      });
-    }
-    function setActiveSort(btnId) {
-      document.querySelectorAll("#sort-default, #sort-date, #sort-likes, #sort-views").forEach((btn3) => {
-        btn3.classList.remove("active");
-      });
-      const btn2 = document.getElementById(btnId);
-      if (btn2)
-        btn2.classList.add("active");
-    }
-    document.getElementById("sort-default").addEventListener("click", () => {
-      renderNews(lastArticles);
-      setActiveSort("sort-default");
-    });
-    document.getElementById("sort-date").addEventListener("click", () => {
-      const sorted = [...lastArticles].sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
-      renderNews(sorted);
-      setActiveSort("sort-date");
-    });
-    document.getElementById("sort-likes").addEventListener("click", () => {
-      const sorted = [...lastArticles].sort((a, b) => (b.likes ?? 0) - (a.likes ?? 0));
-      renderNews(sorted);
-      setActiveSort("sort-likes");
-    });
-    loadPopularAll();
-    loadNews("Galatasaray");
-  });
+  window.setLanguage = setLanguage;
 
   // node_modules/swiper/shared/ssr-window.esm.mjs
   function isObject(obj) {
@@ -4606,86 +4458,188 @@
   });
   Swiper.use([Resize, Observer]);
 
-  // src/js/swiper-init.js
-  document.addEventListener("DOMContentLoaded", function() {
-    const el = document.querySelector(".players-slider");
-    if (!el)
+  // src/js/news.js
+  async function loadTopTurkeyNews() {
+    const res = await fetch("/news?q=Turkey");
+    const articles = await res.json();
+    const container = document.getElementById("top-news-list");
+    if (!container)
       return;
-    new Swiper(el, {
-      slidesPerView: 4,
+    container.innerHTML = "";
+    articles.forEach((article) => {
+      const slide2 = document.createElement("div");
+      slide2.className = "swiper-slide";
+      slide2.innerHTML = `
+      <div class="top-news__item">
+        <div class="top-news__summary">
+          <div class="top-news__country"><img src="images/icon-turkey.webp"> Turkey</div>
+          <div class="top-news__date">${article.publishedAt ? new Date(article.publishedAt).toLocaleString() : ""}</div>
+        </div>
+        <div class="top-news__title"><a href="${article.url}" target="_blank">${article.title}</a></div>
+      </div>
+    `;
+      container.appendChild(slide2);
+    });
+    new Swiper(".top-news__slider.swiper-container", {
+      slidesPerView: 1,
       spaceBetween: 20,
+      slidesToScroll: 1,
       loop: true,
       autoplay: {
         delay: 3500,
         disableOnInteraction: false
-      },
-      centeredSlides: true,
-      speed: 500
-      // Можно добавить другие параметры по желанию
+      }
     });
-  });
-
-  // src/js/main.js
-  async function showArticlesByLang(lang) {
-    const main = document.querySelector("main");
-    if (!main)
-      return;
-    main.querySelectorAll("[data-lang]").forEach((div2) => div2.remove());
-    const div = document.createElement("div");
-    div.setAttribute("data-lang", lang);
-    let file = "";
-    if (lang === "ru")
-      file = "components/articles-ru.html";
-    if (lang === "en")
-      file = "components/articles-en.html";
-    if (lang === "ar")
-      file = "components/articles-ar.html";
-    if (file) {
-      try {
-        const resp = await fetch(file);
-        if (resp.ok) {
-          div.innerHTML = await resp.text();
-        } else {
-          div.innerHTML = "<p>\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u0437\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044C \u0441\u0442\u0430\u0442\u044C\u0438</p>";
-        }
-      } catch {
-        div.innerHTML = "<p>\u041E\u0448\u0438\u0431\u043A\u0430 \u0437\u0430\u0433\u0440\u0443\u0437\u043A\u0438 \u0441\u0442\u0430\u0442\u0435\u0439</p>";
+  }
+  var lastArticles = [];
+  async function loadPopularAll() {
+    const res = await fetch("/popular/all");
+    const data = await res.json();
+    const customItems = {
+      turkey: {
+        text: "Al Ahly",
+        url: "https://galatasaray.org/"
+      },
+      azerbaijan: {
+        text: "Al Ahly",
+        url: "https://qarabagh.com/"
+      },
+      lebanon: {
+        text: "Al Ahly",
+        url: "https://www.lebanon.com/"
       }
-      const h1 = main.querySelector('h1[data-i18n="main.greeting"]');
-      if (h1 && h1.nextSibling) {
-        main.insertBefore(div, h1.nextSibling);
-      } else {
-        main.appendChild(div);
-      }
+    };
+    function insertCustomRandomly(arr, customLi) {
+      const pos = Math.floor(Math.random() * (arr.length + 1));
+      arr.splice(pos, 0, customLi);
+      return arr;
+    }
+    const turkeyUl = document.querySelector(".top-trends__list:nth-child(1) ul");
+    if (turkeyUl) {
+      turkeyUl.innerHTML = "";
+      const lis = data.turkey.map((q) => {
+        const li = document.createElement("li");
+        li.className = "top-trends__item";
+        li.textContent = q;
+        li.addEventListener("click", () => loadNews(q));
+        return li;
+      });
+      const customLi = document.createElement("li");
+      customLi.className = "top-trends__item top-trends__item--custom";
+      customLi.innerHTML = `<a href="${customItems.turkey.url}" target="_blank">${customItems.turkey.text}</a>`;
+      insertCustomRandomly(lis, customLi).forEach((li) => turkeyUl.appendChild(li));
+    }
+    const azUl = document.querySelector(".top-trends__list:nth-child(2) ul");
+    if (azUl) {
+      azUl.innerHTML = "";
+      const lis = data.azerbaijan.map((q) => {
+        const li = document.createElement("li");
+        li.className = "top-trends__item";
+        li.textContent = q;
+        li.addEventListener("click", () => loadNews(q));
+        return li;
+      });
+      const customLi = document.createElement("li");
+      customLi.className = "top-trends__item top-trends__item--custom";
+      customLi.innerHTML = `<a href="${customItems.azerbaijan.url}" target="_blank">${customItems.azerbaijan.text}</a>`;
+      insertCustomRandomly(lis, customLi).forEach((li) => azUl.appendChild(li));
+    }
+    const lebUl = document.querySelector(".top-trends__list:nth-child(3) ul");
+    if (lebUl) {
+      lebUl.innerHTML = "";
+      const lis = data.lebanon.map((q) => {
+        const li = document.createElement("li");
+        li.className = "top-trends__item";
+        li.textContent = q;
+        li.addEventListener("click", () => loadNews(q));
+        return li;
+      });
+      const customLi = document.createElement("li");
+      customLi.className = "top-trends__item top-trends__item--custom";
+      customLi.innerHTML = `<a href="${customItems.lebanon.url}" target="_blank">${customItems.lebanon.text}</a>`;
+      insertCustomRandomly(lis, customLi).forEach((li) => lebUl.appendChild(li));
     }
   }
-  document.addEventListener("DOMContentLoaded", function() {
-    const lang = localStorage.getItem("lang") || "ru";
-    showArticlesByLang(lang);
-    const langSelect = document.getElementById("lang-select");
-    if (langSelect) {
-      langSelect.addEventListener("change", (e) => {
-        showArticlesByLang(e.target.value);
+  async function loadNews(topic) {
+    const res = await fetch(`/news?q=${encodeURIComponent(topic)}`);
+    const articles = await res.json();
+    articles.forEach((a) => {
+      if (typeof a.likes === "undefined")
+        a.likes = Math.floor(Math.random() * 1e3);
+      if (typeof a.views === "undefined")
+        a.views = Math.floor(Math.random() * 5e3);
+    });
+    lastArticles = articles;
+    renderNews(articles);
+  }
+  function renderNews(articles) {
+    const container = document.getElementById("news-container");
+    container.innerHTML = "";
+    if (!articles.length) {
+      container.innerHTML = "<p>\u041D\u043E\u0432\u043E\u0441\u0442\u0435\u0439 \u043D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D\u043E</p>";
+      return;
+    }
+    articles.forEach((article) => {
+      const item = document.createElement("div");
+      const isCustom = article.title === "\u0413\u0430\u043B\u0430\u0446\u0430\u0441\u0430\u0440\u0430\u0439 \u0432\u044B\u0438\u0433\u0440\u0430\u043B \u0432\u0430\u0436\u043D\u044B\u0439 \u043C\u0430\u0442\u0447!" || article.title === "\u0418\u043D\u0442\u0435\u0440\u0432\u044C\u044E \u0441 \u0442\u0440\u0435\u043D\u0435\u0440\u043E\u043C \u0413\u0430\u043B\u0430\u0446\u0430\u0441\u0430\u0440\u0430\u044F";
+      item.className = "news-item" + (isCustom ? " news-item--custom" : "");
+      item.innerHTML = `
+      ${article.imageUrl ? `<div class="news-item__image" style="background-image:url(${article.imageUrl})"></div>` : ""}
+      <div class="news-item__content">
+      <h3><a href="${article.url}" target="_blank">${article.title}</a></h3>
+      <p>${article.description || ""}</p>
+      <small>${new Date(article.publishedAt).toLocaleString()}</small>
+      </div>
+      <div class="news-item__summary">\u{1F44D} \u041B\u0430\u0439\u043A\u0438: ${article.likes ?? 0} | \u{1F441}\uFE0F \u041F\u0440\u043E\u0441\u043C\u043E\u0442\u0440\u044B: ${article.views ?? 0}</div>
+    `;
+      container.appendChild(item);
+    });
+  }
+  document.addEventListener("DOMContentLoaded", () => {
+    const input = document.getElementById("search-input");
+    const btn = document.getElementById("search-btn");
+    if (input && btn) {
+      btn.addEventListener("click", () => {
+        const query = input.value.trim();
+        if (query)
+          loadNews(query);
+      });
+      input.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          const query = input.value.trim();
+          if (query)
+            loadNews(query);
+        }
       });
     }
-    window.showArticlesByLang = showArticlesByLang;
-  });
-  if (typeof setLanguage === "function") {
-    const origSetLanguage = setLanguage;
-    window.setLanguage = function(lang) {
-      origSetLanguage(lang);
-      showArticlesByLang(lang);
-    };
-  }
-  function startRandomCounter() {
-    const el = document.getElementById("random-counter");
-    if (!el)
-      return;
-    function update2() {
-      el.textContent = Math.floor(Math.random() * (1600 - 1200 + 1)) + 1200;
+    function setActiveSort(btnId) {
+      document.querySelectorAll("#sort-default, #sort-date, #sort-likes, #sort-views").forEach((btn3) => {
+        btn3.classList.remove("active");
+      });
+      const btn2 = document.getElementById(btnId);
+      if (btn2)
+        btn2.classList.add("active");
     }
-    update2();
-    setInterval(update2, 5e3);
-  }
-  document.addEventListener("DOMContentLoaded", startRandomCounter);
+    document.getElementById("sort-default").addEventListener("click", () => {
+      renderNews(lastArticles);
+      setActiveSort("sort-default");
+    });
+    document.getElementById("sort-date").addEventListener("click", () => {
+      const sorted = [...lastArticles].sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
+      renderNews(sorted);
+      setActiveSort("sort-date");
+    });
+    document.getElementById("sort-likes").addEventListener("click", () => {
+      const sorted = [...lastArticles].sort((a, b) => (b.likes ?? 0) - (a.likes ?? 0));
+      renderNews(sorted);
+      setActiveSort("sort-likes");
+    });
+    loadPopularAll();
+    loadNews("Galatasaray");
+    loadTopTurkeyNews();
+  });
+
+  // src/js/swiper-init.js
+  document.addEventListener("DOMContentLoaded", function() {
+  });
 })();

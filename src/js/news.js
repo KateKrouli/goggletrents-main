@@ -1,3 +1,43 @@
+import Swiper, { Autoplay } from 'swiper';
+// Загрузка новостей по Турции в top-news__list
+let topNewsSwiper = null;
+
+async function loadTopTurkeyNews() {
+  const res = await fetch('/news?q=Turkey');
+  const articles = await res.json();
+  const container = document.getElementById('top-news-list');
+  if (!container) return;
+  container.innerHTML = '';
+  articles.forEach(article => {
+    const slide = document.createElement('div');
+    slide.className = 'swiper-slide';
+    slide.innerHTML = `
+      <div class="top-news__item">
+        <div class="top-news__summary">
+          <div class="top-news__country"><img src="images/icon-turkey.webp"> Turkey</div>
+          <div class="top-news__date">${article.publishedAt ? new Date(article.publishedAt).toLocaleString() : ''}</div>
+        </div>
+        <div class="top-news__title"><a href="${article.url}" target="_blank">${article.title}</a></div>
+      </div>
+    `;
+    container.appendChild(slide);
+  });
+  // Инициализация Swiper после загрузки новостей
+  // Удаляем предыдущий Swiper, если был
+  if (topNewsSwiper) {
+    topNewsSwiper.destroy(true, true);
+  }
+  topNewsSwiper = new Swiper('.top-news__slider.swiper-container', {
+    modules: [Autoplay],
+    slidesPerView: 1,
+    spaceBetween: 20,
+    loop: true,
+    autoplay: {
+      delay: 3500,
+      disableOnInteraction: false,
+    },
+  });
+}
 let lastArticles = []; // Сохраняем последние загруженные статьи
 
 async function loadPopularAll() {
@@ -175,4 +215,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
   loadPopularAll();
   loadNews("Galatasaray");
+  loadTopTurkeyNews();
+
+  // Динамическая подстановка выбранного тега в news-index__title h2
+  document.querySelectorAll('.top-trends__list ul').forEach(ul => {
+    ul.addEventListener('click', function(e) {
+      const li = e.target.closest('li');
+      if (!li) return;
+      const h2 = document.querySelector('.news-index__title h2');
+      if (h2 && li.textContent.trim()) {
+        h2.textContent = li.textContent.trim();
+      }
+    });
+  });
 });
