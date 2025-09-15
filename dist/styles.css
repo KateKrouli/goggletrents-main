@@ -2238,6 +2238,31 @@ header .header__mobile-btn {
 }
 .news-index__list .news-item {
   width: calc(33.3333333333% - 8px);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  border-radius: 40px;
+  background: #FFF;
+}
+.news-index__list .news-item__image {
+  min-width: 120px;
+  height: 100%;
+  border-radius: 20px;
+  object-fit: cover;
+  background-position: center;
+  background-size: cover;
+}
+.news-index__list .news-item h3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+}
+.news-index__list .news-item p {
+  display: none;
 }
 .news-index__list .news-item__summary {
   display: none;

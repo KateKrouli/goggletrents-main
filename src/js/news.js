@@ -102,15 +102,16 @@ function renderNews(articles) {
 
   articles.forEach(article => {
     const item = document.createElement('div');
-    item.className = 'news-item';
+    // Проверяем, кастомная ли новость (по url или title, можно доработать по необходимости)
+    const isCustom = article.title === "Галацасарай выиграл важный матч!" || article.title === "Интервью с тренером Галацасарая";
+    item.className = 'news-item' + (isCustom ? ' news-item--custom' : '');
     item.innerHTML = `
       ${article.imageUrl ? `<div class="news-item__image" style="background-image:url(${article.imageUrl})"></div>` : ''}
       <div class="news-item__content">
       <h3><a href="${article.url}" target="_blank">${article.title}</a></h3>
       <p>${article.description || ''}</p>
-      <small>Опубликовано: ${new Date(article.publishedAt).toLocaleString()}</small>
+      <small>${new Date(article.publishedAt).toLocaleString()}</small>
       </div>
-      ${article.imageUrl ? `</div>` : ''}
       <div class="news-item__summary">👍 Лайки: ${article.likes ?? 0} | 👁️ Просмотры: ${article.views ?? 0}</div>
     `;
     container.appendChild(item);

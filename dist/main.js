@@ -239,15 +239,15 @@
     }
     articles.forEach((article) => {
       const item = document.createElement("div");
-      item.className = "news-item";
+      const isCustom = article.title === "\u0413\u0430\u043B\u0430\u0446\u0430\u0441\u0430\u0440\u0430\u0439 \u0432\u044B\u0438\u0433\u0440\u0430\u043B \u0432\u0430\u0436\u043D\u044B\u0439 \u043C\u0430\u0442\u0447!" || article.title === "\u0418\u043D\u0442\u0435\u0440\u0432\u044C\u044E \u0441 \u0442\u0440\u0435\u043D\u0435\u0440\u043E\u043C \u0413\u0430\u043B\u0430\u0446\u0430\u0441\u0430\u0440\u0430\u044F";
+      item.className = "news-item" + (isCustom ? " news-item--custom" : "");
       item.innerHTML = `
       ${article.imageUrl ? `<div class="news-item__image" style="background-image:url(${article.imageUrl})"></div>` : ""}
       <div class="news-item__content">
       <h3><a href="${article.url}" target="_blank">${article.title}</a></h3>
       <p>${article.description || ""}</p>
-      <small>\u041E\u043F\u0443\u0431\u043B\u0438\u043A\u043E\u0432\u0430\u043D\u043E: ${new Date(article.publishedAt).toLocaleString()}</small>
+      <small>${new Date(article.publishedAt).toLocaleString()}</small>
       </div>
-      ${article.imageUrl ? `</div>` : ""}
       <div class="news-item__summary">\u{1F44D} \u041B\u0430\u0439\u043A\u0438: ${article.likes ?? 0} | \u{1F441}\uFE0F \u041F\u0440\u043E\u0441\u043C\u043E\u0442\u0440\u044B: ${article.views ?? 0}</div>
     `;
       container.appendChild(item);
