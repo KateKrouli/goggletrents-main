@@ -122,6 +122,7 @@ async function loadPopularAll() {
 }
 
 async function loadNews(topic) {
+window.loadNews = loadNews;
   const res = await fetch(`/news?q=${encodeURIComponent(topic)}`);
   const articles = await res.json();
 
@@ -135,86 +136,111 @@ async function loadNews(topic) {
 }
 
 function renderNews(articles) {
-  const container = document.getElementById('news-container');
-  container.innerHTML = '';
-
-  if (!articles.length) {
-    container.innerHTML = "<p>Новостей не найдено</p>";
-    return;
-  }
-
-  articles.forEach(article => {
-    const item = document.createElement('div');
-    // Проверяем, кастомная ли новость (по url или title, можно доработать по необходимости)
-    const isCustom = article.title === "Галацасарай выиграл важный матч!" || article.title === "Интервью с тренером Галацасарая";
-    item.className = 'news-item' + (isCustom ? ' news-item--custom' : '');
-    item.innerHTML = `
-      ${article.imageUrl ? `<div class="news-item__image" style="background-image:url(${article.imageUrl})"></div>` : ''}
-      <div class="news-item__content">
-      <h3><a href="${article.url}" target="_blank">${article.title}</a></h3>
-      <p>${article.description || ''}</p>
-      <small>${new Date(article.publishedAt).toLocaleString()}</small>
-      </div>
-      <div class="news-item__summary">👍 Лайки: ${article.likes ?? 0} | 👁️ Просмотры: ${article.views ?? 0}</div>
-    `;
-    container.appendChild(item);
+  const containers = document.querySelectorAll('.news__list');
+  containers.forEach(container => {
+    container.innerHTML = '';
+    if (!articles.length) {
+      container.innerHTML = "<p>Новостей не найдено</p>";
+      return;
+    }
+    articles.forEach(article => {
+      const item = document.createElement('div');
+      // Проверяем, кастомная ли новость (по url или title, можно доработать по необходимости)
+      const isCustom = article.title === "Галацасарай выиграл важный матч!" || article.title === "Интервью с тренером Галацасарая";
+      item.className = 'news-item' + (isCustom ? ' news-item--custom' : '');
+      item.innerHTML = `
+        ${article.imageUrl ? `<div class=\"news-item__image\" style=\"background-image:url(${article.imageUrl})\"></div>` : ''}
+        <div class=\"news-item__content\">
+        <h3><a href=\"${article.url}\" target=\"_blank\">${article.title}</a></h3>
+        <p>${article.description || ''}</p>
+        <small>${new Date(article.publishedAt).toLocaleString()}</small>
+        </div>
+        <div class=\"news-item__summary\">👍 Лайки: ${article.likes ?? 0} | 👁️ Просмотры: ${article.views ?? 0}</div>
+      `;
+      container.appendChild(item);
+    });
   });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  const input = document.getElementById('search-input');
-  const btn = document.getElementById('search-btn');
-  if (input && btn) {
-    btn.addEventListener('click', () => {
-      const query = input.value.trim();
-      if (query) loadNews(query);
-    });
+  document.querySelectorAll('.search-input').forEach(input => {
+    // Ищем ближайшую кнопку внутри той же формы или блока
+    let btn = null;
+    // Сначала ищем в родителе .search-form, если есть
+    const form = input.closest('.search-form');
+    if (form) {
+      btn = form.querySelector('.search-btn, .search-button');
+    }
+    // Если не нашли, ищем просто ближайшую кнопку по классу
+    if (!btn) {
+      btn = input.parentElement.querySelector('.search-btn, .search-button');
+    }
+    if (btn) {
+      btn.addEventListener('click', () => {
+        const query = input.value.trim();
+        if (query) loadNews(query);
+      });
+    }
     input.addEventListener('keydown', (e) => {
       if (e.key === 'Enter') {
         const query = input.value.trim();
         if (query) loadNews(query);
       }
     });
-  }
-
-  // Функция для управления классом active
-  function setActiveSort(btnId) {
-    document.querySelectorAll('#sort-default, #sort-date, #sort-likes, #sort-views').forEach(btn => {
-      btn.classList.remove('active');
-    });
-    const btn = document.getElementById(btnId);
-    if (btn) btn.classList.add('active');
-  }
-
-  // Сортировка по умолчанию
-  document.getElementById('sort-default').addEventListener('click', () => {
-    renderNews(lastArticles);
-    setActiveSort('sort-default');
   });
 
-  // Сортировка по дате (по убыванию)
-  document.getElementById('sort-date').addEventListener('click', () => {
-    const sorted = [...lastArticles].sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
-    renderNews(sorted);
-    setActiveSort('sort-date');
+  // Поддержка нескольких блоков сортировки
+  document.querySelectorAll('.news-index__sort, .sort').forEach(sortBlock => {
+    const list = sortBlock.closest('.search-page, .news-index, .news-block, .main-width');
+    // Находим соответствующий .news__list рядом с этим блоком
+    let newsList = null;
+    if (list) {
+      newsList = list.querySelector('.news__list');
+    }
+    // Функция для управления классом active внутри блока
+    function setActiveSort(btnId) {
+      sortBlock.querySelectorAll('.sort__btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      const btn = sortBlock.querySelector(`#${btnId}`);
+      if (btn) btn.classList.add('active');
+    }
+    // Сортировка по умолчанию
+    const defaultBtn = sortBlock.querySelector('#sort-default');
+    if (defaultBtn) {
+      defaultBtn.addEventListener('click', () => {
+        if (newsList) renderNews(lastArticles);
+        setActiveSort('sort-default');
+      });
+    }
+    // Сортировка по дате
+    const dateBtn = sortBlock.querySelector('#sort-date');
+    if (dateBtn) {
+      dateBtn.addEventListener('click', () => {
+        const sorted = [...lastArticles].sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
+        if (newsList) renderNews(sorted);
+        setActiveSort('sort-date');
+      });
+    }
+    // Сортировка по лайкам
+    const likesBtn = sortBlock.querySelector('#sort-likes');
+    if (likesBtn) {
+      likesBtn.addEventListener('click', () => {
+        const sorted = [...lastArticles].sort((a, b) => (b.likes ?? 0) - (a.likes ?? 0));
+        if (newsList) renderNews(sorted);
+        setActiveSort('sort-likes');
+      });
+    }
+    // Сортировка по просмотрам (если есть)
+    const viewsBtn = sortBlock.querySelector('#sort-views');
+    if (viewsBtn) {
+      viewsBtn.addEventListener('click', () => {
+        const sorted = [...lastArticles].sort((a, b) => (b.views ?? 0) - (a.views ?? 0));
+        if (newsList) renderNews(sorted);
+        setActiveSort('sort-views');
+      });
+    }
   });
-
-  // Сортировка по лайкам
-  document.getElementById('sort-likes').addEventListener('click', () => {
-    const sorted = [...lastArticles].sort((a, b) => (b.likes ?? 0) - (a.likes ?? 0));
-    renderNews(sorted);
-    setActiveSort('sort-likes');
-  });
-
-  // Сортировка по просмотрам
-  // const sortViewsBtn = document.getElementById('sort-views');
-  // if (sortViewsBtn) {
-  //   sortViewsBtn.addEventListener('click', () => {
-  //     const sorted = [...lastArticles].sort((a, b) => (b.views ?? 0) - (a.views ?? 0));
-  //     renderNews(sorted);
-  //     setActiveSort('sort-views');
-  //   });
-  // }
 
   loadPopularAll();
   loadNews("Galatasaray");

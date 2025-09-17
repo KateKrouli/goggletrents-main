@@ -1,4 +1,89 @@
+// Открытие/закрытие попапа поиска
+document.addEventListener('DOMContentLoaded', () => {
+	// Возврат в изначальное состояние по клику на логотип
+	const logo = document.querySelector('.header__logo');
+	logo?.addEventListener('click', (e) => {
+		e.preventDefault();
+		document.querySelector('.main-block')?.classList.remove('hidden');
+		document.querySelector('.top-trends')?.classList.remove('hidden');
+		document.querySelector('.telegram')?.classList.remove('hidden');
+		document.querySelector('.search-page')?.classList.add('hidden');
+		document.querySelector('.index-page')?.classList.remove('hidden');
+		// Сбросить заголовок новостей
+		const newsH2 = document.querySelector('.news__h2');
+		if (newsH2) newsH2.textContent = 'Sports news';
+	});
+	// Обновление заголовка новостей при поиске из main-block__input
+	const mainInput = document.querySelector('.main-block__input');
+	const newsH2 = document.querySelector('.news__h2');
+	if (mainInput && newsH2) {
+			mainInput.addEventListener('keydown', (e) => {
+				if (e.key === 'Enter') {
+					const query = mainInput.value.trim();
+					if (query) {
+						newsH2.textContent = query;
+						document.querySelector('.main-block')?.classList.add('hidden');
+						document.querySelector('.top-trends')?.classList.add('hidden');
+						document.querySelector('.telegram')?.classList.add('hidden');
+					}
+				}
+			});
+	}
 
+	// Обновление заголовка новостей при выборе тренда из top-trends__list
+	document.querySelectorAll('.top-trends__list ul').forEach(ul => {
+			ul.addEventListener('click', function(e) {
+				const li = e.target.closest('li');
+				if (!li) return;
+				if (newsH2 && li.textContent.trim()) {
+					newsH2.textContent = li.textContent.trim();
+					document.querySelector('.main-block')?.classList.add('hidden');
+					document.querySelector('.top-trends')?.classList.add('hidden');
+					document.querySelector('.telegram')?.classList.add('hidden');
+				}
+			});
+	});
+	document.querySelectorAll('.search-popup').forEach(popup => {
+		const openBtns = document.querySelectorAll('.search-btn');
+		const closeBtns = popup.querySelectorAll('.search-popup__close, #search-close-btn');
+		const container = popup.querySelector('.search-popup__container');
+		openBtns.forEach(btn => {
+			btn.addEventListener('click', (e) => {
+				e.preventDefault();
+				popup.classList.add('open');
+			});
+		}); 
+		closeBtns.forEach(btn => {
+			btn.addEventListener('click', (e) => {
+				e.preventDefault();
+				popup.classList.remove('open');
+			});
+		});
+		if (container) {
+			popup.addEventListener('click', (e) => {
+				if (!container.contains(e.target)) {
+					popup.classList.remove('open');
+            }
+			});
+		}
+	});
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const allNewsBtn =  document.querySelector('.all-news-btn');
+    const newsList = document.querySelector('.news__list--index');
+    allNewsBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (newsList) {
+            newsList.querySelectorAll('.news-item').forEach((item, index) => {
+                if (index >= 16) {
+                    item.style.display = 'flex';
+                }
+            });
+            allNewsBtn.style.display = 'none';
+        }
+    });
+});
 import './lang.js';
 import './news.js';
 
@@ -73,3 +158,88 @@ import './news.js';
 // }
 
 // document.addEventListener('DOMContentLoaded', startRandomCounter);
+
+// Вывод 3 случайных трендов в попап поиска
+async function showRandomTrendsInPopup() {
+	try {
+		const res = await fetch('/popular/all');
+		const data = await res.json();
+		// Собираем все тренды в один массив
+		const allTrends = [...(data.turkey || []), ...(data.azerbaijan || []), ...(data.lebanon || [])];
+		// Выбираем 3 случайных
+		const randomTrends = [];
+		const used = new Set();
+		while (randomTrends.length < 3 && allTrends.length) {
+			const idx = Math.floor(Math.random() * allTrends.length);
+			if (!used.has(allTrends[idx])) {
+				randomTrends.push(allTrends[idx]);
+				used.add(allTrends[idx]);
+			}
+		}
+		const ul = document.querySelector('#search-requests ul');
+		if (ul) {
+			ul.innerHTML = '';
+			randomTrends.forEach(trend => {
+				const li = document.createElement('li');
+				const span = document.createElement('span');
+				span.textContent = trend;
+				li.appendChild(span);
+				ul.appendChild(li);
+			});
+		}
+	} catch (e) {
+		// Ошибка запроса
+	}
+}
+
+	// Показывать тренды при открытии попапа
+	document.addEventListener('DOMContentLoaded', () => {
+		const popup = document.querySelector('.search-popup');
+		const indexPage = document.querySelector('.index-page');
+		const searchPage = document.querySelector('.search-page');
+		const newsH2 = document.querySelector('.news__h2');
+		if (popup) {
+			showRandomTrendsInPopup();
+			// Добавляем обработчик клика на li тренда
+			const ul = popup.querySelector('#search-requests ul');
+			const input = popup.querySelector('#search-popup-input');
+			const btn = popup.querySelector('.search-popup__btn');
+			function updateBtnState() {
+				if (btn && input) {
+					btn.disabled = !input.value.trim();
+				}
+			}
+			if (ul) {
+				ul.addEventListener('click', function(e) {
+					const li = e.target.closest('li');
+					if (li && input) {
+						input.value = li.textContent.trim();
+						updateBtnState();
+						if (newsH2) newsH2.textContent = li.textContent.trim();
+					}
+				});
+			}
+			if (input) {
+				input.addEventListener('input', updateBtnState);
+				// Инициализация состояния кнопки при загрузке
+				updateBtnState();
+				btn.addEventListener('click', () => {
+					const query = input.value.trim();
+								if (query) {
+									loadNews(query);
+									popup.classList.remove('open');
+									if (indexPage) {
+										indexPage.classList.add('hidden');
+									}
+									if (searchPage) {
+										searchPage.classList.remove('hidden');
+									}
+									if (newsH2) newsH2.textContent = query;
+									document.querySelector('.main-block')?.classList.add('hidden');
+									document.querySelector('.top-trends')?.classList.add('hidden');
+									document.querySelector('.telegram')?.classList.add('hidden');
+								}
+				});
+			}
+		}
+	});

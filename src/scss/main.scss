@@ -31,6 +31,11 @@ body {
   overflow-x: hidden;
   background: #F4F9FF;
   padding: 20px;
+
+  @media (max-width: 767px) { 
+    padding: 8px;
+    padding-top: 92px;
+  }
 }
 
 a {
@@ -118,6 +123,17 @@ h2 {
   }
 }
 
+.search-btn {
+      width: 44px;
+      height:44px;
+      border: 1px solid #001A33;
+      border-radius: 50%;
+      margin-left: auto
+    }
+
+    .index-page.hidden {
+      display: none;
+    }
 @import 'header';
 
 @import 'main-block';
@@ -127,5 +143,9 @@ h2 {
 @import 'telegram';
 
 @import 'news-index';
+
+@import 'search-popup';
+
+@import 'search';
 
 @import 'footer';

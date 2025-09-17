@@ -11,7 +11,8 @@
   <header>
   <div class="header main-width">
     <div class="header__logo"><img src="images/logo.webp"><div><span>google</span>trends</div></div>
-    <div class="custom-lang-switcher" id="lang-switcher">
+    <div class="header__nav">
+       <div class="custom-lang-switcher" id="lang-switcher">
   <button type="button" class="lang-btn" data-value="tr">
     <span class="lang-flag flag-tr">
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -114,7 +115,6 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 </script>
-    <div class="header__nav">
       <nav>
         <ul>
           <li><a href="#" data-i18n="header.menuHome">Trending</a></li>
@@ -148,6 +148,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
   <main>
+    <div class="index-page"> 
       
 <div class="main-block main-width">
     <div class="main-block__content">
@@ -157,7 +158,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="main-block__form">
                 <button type="submit" class="main-block__btn" id="search-btn">
                 </button>
-                <input data-i18n-placeholder="main.button" id="search-input" name="search" type="text" class="main-block__input" placeholder="Search Trends & News">
+                <input data-i18n-placeholder="search.placeholderMain" id="search-input" name="search" type="text" class="main-block__input" placeholder="Search Trends & News">
             </div>
         </div>
     </div>
@@ -171,17 +172,15 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>   
       <div class="top-trends main-width">
     <div class="main-title">
-        <h2>Top Trends</h2>
-        <span>Real-time tracking of the hottest sports topics across </span>
+        <h2 data-i18n="trends.title">Top Trends</h2>
+        <span data-i18n="trends.description">Real-time tracking of the hottest sports topics across </span>
     </div>
     <div class="top-trends__container">
         <div class="top-trends__list">
             <div class="top-trends__title">
                 <img src="images/icon-turkey.webp"> Turkey
             </div>
-            <ul>
-                <li class="top-trends__item top-trends__item--custom">Al Ahly</li>
-                    
+            <ul>     
             </ul>
         </div>
         <div class="top-trends__list">
@@ -211,22 +210,73 @@ document.addEventListener('DOMContentLoaded', function() {
         <img src="images/telegram.webp" alt="Telegram Illustration">
     </div>
 </div> 
-      <div class="news-index main-width">
-    <div class="news-index__title main-title">
-         <h2>Sports news</h2>
-        <div class="news-index__sort sort">
-            <button class="sort__btn active" id="sort-default">Rising</button>
-            <button class="sort__btn" id="sort-likes">Hot</button>
-            <button class="sort__btn" id="sort-date">New</button>
+      <div class="news main-width">
+    <div class="news__title main-title">
+         <h2 class="news__h2">Sports news</h2>
+       <div class="news__sort sort">
+            <button class="sort__btn active" data-i18n="sort.sort-defaul" id="sort-default">Rising</button>
+            <button class="sort__btn" data-i18n="sort.sort-likes" id="sort-likes">Hot</button>
+            <button class="sort__btn" data-i18n="sort.sort-date" id="sort-date">New</button>
         </div>
+        <a class="btn search-btn" href="">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M17.5003 17.5003L13.8753 13.8753M15.8333 9.16667C15.8333 12.8486 12.8486 15.8333 9.16667 15.8333C5.48477 15.8333 2.5 12.8486 2.5 9.16667C2.5 5.48477 5.48477 2.5 9.16667 2.5C12.8486 2.5 15.8333 5.48477 15.8333 9.16667Z" stroke="#001A33" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+        </a>
    </div>
-   <div class="news-index__list" id="news-container"></div>
-   <a href="" class="btn news-index__btn">
+   <div class="news__list news__list--index" id="news-container"></div>
+   <a href="" class="btn news__btn all-news-btn" data-i18n="news.viewAll">
     View all posts
    </a>
 </div>
  
  
+    </div>
+    <div class="search-page hidden">
+      <div class="search-page main-width">
+    <div class="search-page__top">
+        <div class="search-form">
+            <input data-i18n-placeholder="main.button" id="search-input" name="search" type="text" class="search-form__input search-input" placeholder="Search Trends & News">   
+            <button type="submit" class="search-form__btn btn search-button" id="search-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+  <path d="M17.5003 17.5003L13.8753 13.8753M15.8333 9.16667C15.8333 12.8486 12.8486 15.8333 9.16667 15.8333C5.48477 15.8333 2.5 12.8486 2.5 9.16667C2.5 5.48477 5.48477 2.5 9.16667 2.5C12.8486 2.5 15.8333 5.48477 15.8333 9.16667Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+            </button>
+        </div>
+        <div class="news__sort sort">
+            <button class="sort__btn active" data-i18n="sort.sort-defaul" id="sort-default">Rising</button>
+            <button class="sort__btn" data-i18n="sort.sort-likes" id="sort-likes">Hot</button>
+            <button class="sort__btn" data-i18n="sort.sort-date" id="sort-date">New</button>
+        </div>
+    </div>
+        <div class="news__list"></div>
+        </div>
+
+    </div>
+      <div class="search-popup">
+    <div class="search-popup__container">
+        <div class="search-popup__title">
+            <div data-i18n="search.title">Trending</div>
+            <a class="search-popup__close" id="search-close-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                    <g opacity="0.33">
+                        <path d="M12.4998 8.00033L7.49984 13.0003M7.49984 8.00033L12.4998 13.0003M18.3332 10.5003C18.3332 15.1027 14.6022 18.8337 9.99984 18.8337C5.39746 18.8337 1.6665 15.1027 1.6665 10.5003C1.6665 5.89795 5.39746 2.16699 9.99984 2.16699C14.6022 2.16699 18.3332 5.89795 18.3332 10.5003Z" stroke="#001A33" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </g>
+                </svg>
+            </a>
+        </div>
+        <div class="search-popup__form search-form">
+            <input data-i18n-placeholder="search.placeholder" id="search-popup-input" name="search" type="text" class="search-input search-popup__input" placeholder="Search...">
+            <div class="requests" id="search-requests">
+                <div class="requests__li" data-i18n="search.trending">Dashboard</div>
+                <ul>
+                    <!-- JS вставит сюда 3 случайных тренда -->
+                </ul>
+            </div>
+            <button type="submit" data-i18n="search.btn" class="btn search-popup__btn search-button" disabled="">Search</button>
+        </div>
+    </div>
+</div>
   </main> 
 
   <footer>

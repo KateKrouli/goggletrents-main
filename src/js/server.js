@@ -86,7 +86,7 @@ app.get("/news", async (req, res) => {
         articles.push(customNews[1]);
       }
 
-  res.json(articles.slice(0, 15));
+  res.json(articles);
   } catch (err) {
     console.error(err);
     // Возвращаем только кастомные новости при ошибке

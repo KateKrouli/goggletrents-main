@@ -2,10 +2,30 @@
 
 const translations = {
   en: {
+    sort: {
+      'sort-defaul': 'Rising',
+      'sort-likes': 'Hot',
+      'sort-date': 'New'
+    },
+    search: {
+      title: "Trending",
+      placeholderMain: "Search trends and news...",
+      placeholder: "Search...",
+      trending: "Dashboard",
+      btn: "Search"
+    },
     header: {
       menuHome: "Trending",
       menuAbout: "News",
       menuContact: "About"
+    },
+    trends: {
+      title: "Top Trends",
+      description: "Real-time tracking of the hottest sports topics across "
+    },
+    news: {
+      title: "Sports news",
+      viewAll: "View all posts"
     },
     footer: {
       copyright: "All rights reserved."
@@ -15,31 +35,6 @@ const translations = {
         description: "A community-driven platform discovering and tracking sports content across MENA.",
         button: "Search Trends & News",
       },
-    xbet: {
-      title: "Strong Partnerships with a Strong Brand",
-      description: "1xBet is a trusted sponsor and business partner of world-renowned clubs, athletes, and technology brands."
-    },
-    players: {
-      title: "Top Türkiye players",
-      digit1: "Player 1",
-      digit2: "Player 2",
-      digit3: "Player 3",
-    },
-    secondary: {
-      button: "Bet Now"
-    },
-    infographics: {
-      title: "Fast, Easy, Secure — we're ready for your win",
-      item1: "Fast",
-      item2: "Easy",
-      item3: "Secure",
-      desc1: "Create your bet slip in 3 clicks. Live odds update in milliseconds; pages open in < 1 sec.",
-      desc2: "60+ payment methods, instant TL deposit/withdrawal. Find thousands of matches and markets in seconds with smart filters.",
-      desc3: "Curacao licensed certified betting site. 256-bit SSL, independent audits and responsible gaming policy keep your data safe."
-    },
-    banners: {
-      title: "Start winning now!"
-    },
     telegram: {
       title: "Stay Connected — <span>Join Our Telegram</span>",
       description: "Get the hottest sports stories, trend alerts, and exclusive insights directly in our Telegram channel. Don’t miss out on updates and surprises!",
@@ -47,44 +42,39 @@ const translations = {
     }
   }, 
   tr: {
+    sort: {
+      'sort-defaul': 'Yükselen',
+      'sort-likes': 'Popüler',
+      'sort-date': 'Yeni'
+    },
+    search: {
+      title: "Trendler",
+      placeholderMain: "Trendleri ve haberleri ara...",
+      placeholder: "Ara...",
+      trending: "Panel",
+      btn: "Ara"
+    },
     header: {
       menuHome: "Ana Sayfa",
       menuAbout: "Hakkımızda",
       menuContact: "İletişim"
     },
+    trends: {
+      title: "En Popüler Trendler",
+      description: "Dünya genelinde en popüler spor konularının gerçek zamanlı takibi"
+    },
+    news: {
+      title: "Spor haberleri",
+      viewAll: "Tüm gönderileri görüntüle"
+    },
     footer: {
       copyright: "Tüm hakları saklıdır." 
     },
     main: {
-        title: "Site engellendi, ama kuponun güvende",
-        description: "Çalışan bağlantıyı senin için bulduk — üstelik hesabına özel bir bonus hazırladık.",
+        title: "Go OG — Trendleri Takip Et",
+        description: "MENA genelinde spor içeriklerini keşfeden ve takip eden topluluk odaklı bir platform.",
         button: "Bonusu Al",
       },
-    xbet: {
-      title: "Güçlü Markayla Güçlü Ortaklıklar",
-      description: "1xBet, dünya çapında tanınan kulüplerin, sporcuların ve teknoloji markalarının güvenilir sponsoru ve iş ortağıdır."
-    },
-    players: {
-      title: "Top Türkiye oyuncuları",
-      digit1: "Oyuncu 1",
-      digit2: "Oyuncu 2",
-      digit3: "Oyuncu 3",
-    },
-    secondary: {
-      button: "Bahis Yap"
-    },
-    infographics: {
-      title: "Hızlı, Kolay, Güvenli — kazanmanız için hazırız",
-      item1: "Hızlı",
-      item2: "Kolay",
-      item3: "Güvenli",
-      desc1: "Bahis kuponunuzu 3 tıkta oluşturun. Canlı oranlar milisaniyeler içinde güncellenir; sayfalar < 1 sn’de açılır.",
-      desc2: "60+ ödeme yöntemi, anında TL yatırma / çekme. Binlerce maç ve marketi akıllı filtrelerle saniyeler içinde bulun.",
-      desc3: "Curaçao lisanslı sertifikalı bahis sitesi. 256-bit SSL, bağımsız denetimler ve sorumlu oyun politikasıyla verileriniz güvende."
-    },
-    banners: {
-      title: "Kazanmaya Şimdi Başla!"
-    },
     telegram: {
       title: "Bağlantıda Kalın — <span>Telegram'a Katılın</span>",
       description: "En sıcak spor hikayeleri, trend uyarıları ve özel analizler doğrudan Telegram kanalımızda. Sürprizleri ve güncellemeleri kaçırmayın!",
@@ -115,20 +105,32 @@ function getLanguage() {
 function applyTranslations(lang) {
   const t = translations[lang];
   if (!t) return;
-  // Players
-  document.querySelectorAll('[data-i18n="players.title"]').forEach(el => el.textContent = t.players.title);
-  document.querySelectorAll('[data-i18n="players.digit1"]').forEach(el => el.textContent = t.players.digit1);
-  document.querySelectorAll('[data-i18n="players.digit2"]').forEach(el => el.textContent = t.players.digit2);
-  document.querySelectorAll('[data-i18n="players.digit3"]').forEach(el => el.textContent = t.players.digit3);
-  document.querySelectorAll('[data-i18n="secondary.button"]').forEach(el => el.textContent = t.secondary.button);
+  // Search
+  if (t.search) {
+    document.querySelectorAll('[data-i18n="search.title"]').forEach(el => el.textContent = t.search.title);
+    document.querySelectorAll('[data-i18n-placeholder="search.placeholder"]').forEach(el => el.placeholder = t.search.placeholder);
+    document.querySelectorAll('[data-i18n-placeholder="search.placeholderMain"]').forEach(el => el.placeholder = t.search.placeholderMain);
+    document.querySelectorAll('[data-i18n="search.trending"]').forEach(el => el.textContent = t.search.trending);
+    document.querySelectorAll('[data-i18n="search.btn"]').forEach(el => el.textContent = t.search.btn);
+  }
+  // Sort
+  if (t.sort) {
+    document.querySelectorAll('[data-i18n="sort.sort-defaul"]').forEach(el => el.textContent = t.sort['sort-defaul']);
+    document.querySelectorAll('[data-i18n="sort.sort-likes"]').forEach(el => el.textContent = t.sort['sort-likes']);
+    document.querySelectorAll('[data-i18n="sort.sort-date"]').forEach(el => el.textContent = t.sort['sort-date']);
+  }
+ 
   // Header
   document.querySelectorAll('[data-i18n="header.title"]').forEach(el => el.textContent = t.header.title);
   document.querySelectorAll('[data-i18n="header.menuHome"]').forEach(el => el.textContent = t.header.menuHome);
   document.querySelectorAll('[data-i18n="header.menuAbout"]').forEach(el => el.textContent = t.header.menuAbout);
   document.querySelectorAll('[data-i18n="header.menuContact"]').forEach(el => el.textContent = t.header.menuContact);
+
+  document.querySelectorAll('[data-i18n="trends.title"]').forEach(el => el.textContent = t.trends.title);
+  document.querySelectorAll('[data-i18n="trends.description"]').forEach(el => el.textContent = t.trends.description); 
   // Footer
   document.querySelectorAll('[data-i18n="footer.copyright"]').forEach(el => el.textContent = t.footer.copyright);
-  // Main
+  // Mains
   document.querySelectorAll('[data-i18n="main.title"]').forEach(el => {
     if (typeof t.main.title === 'object' && t.main.title.html) {
       el.innerHTML = t.main.title.html;
@@ -138,19 +140,8 @@ function applyTranslations(lang) {
   });
   document.querySelectorAll('[data-i18n="main.description"]').forEach(el => el.textContent = t.main.description);
   document.querySelectorAll('[data-i18n="main.button"]').forEach(el => el.textContent = t.main.button);
-  // Infographics
-  document.querySelectorAll('[data-i18n="infographics.title"]').forEach(el => el.textContent = t.infographics.title);
-  document.querySelectorAll('[data-i18n="infographics.item1"]').forEach(el => el.textContent = t.infographics.item1);
-  document.querySelectorAll('[data-i18n="infographics.item2"]').forEach(el => el.textContent = t.infographics.item2);
-  document.querySelectorAll('[data-i18n="infographics.item3"]').forEach(el => el.textContent = t.infographics.item3);
-  document.querySelectorAll('[data-i18n="infographics.desc1"]').forEach(el => el.textContent = t.infographics.desc1);
-  document.querySelectorAll('[data-i18n="infographics.desc2"]').forEach(el => el.textContent = t.infographics.desc2);
-  document.querySelectorAll('[data-i18n="infographics.desc3"]').forEach(el => el.textContent = t.infographics.desc3);
-  // Banners
-  document.querySelectorAll('[data-i18n="banners.title"]').forEach(el => el.textContent = t.banners.title);
-  // XBet
-  document.querySelectorAll('[data-i18n="xbet.title"]').forEach(el => el.textContent = t.xbet.title);
-  document.querySelectorAll('[data-i18n="xbet.description"]').forEach(el => el.textContent = t.xbet.description);
+  // News
+  document.querySelectorAll('[data-i18n="news.title"]').forEach(el => el.textContent = t.news.title);
   // Telegram
   document.querySelectorAll('[data-i18n="telegram.title"]').forEach(el => el.innerHTML = t.telegram.title);
   document.querySelectorAll('[data-i18n="telegram.description"]').forEach(el => el.textContent = t.telegram.description);

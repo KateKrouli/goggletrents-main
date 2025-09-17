@@ -2,10 +2,30 @@
   // src/js/lang.js
   var translations = {
     en: {
+      sort: {
+        "sort-defaul": "Rising",
+        "sort-likes": "Hot",
+        "sort-date": "New"
+      },
+      search: {
+        title: "Trending",
+        placeholderMain: "Search trends and news...",
+        placeholder: "Search...",
+        trending: "Dashboard",
+        btn: "Search"
+      },
       header: {
         menuHome: "Trending",
         menuAbout: "News",
         menuContact: "About"
+      },
+      trends: {
+        title: "Top Trends",
+        description: "Real-time tracking of the hottest sports topics across "
+      },
+      news: {
+        title: "Sports news",
+        viewAll: "View all posts"
       },
       footer: {
         copyright: "All rights reserved."
@@ -15,31 +35,6 @@
         description: "A community-driven platform discovering and tracking sports content across MENA.",
         button: "Search Trends & News"
       },
-      xbet: {
-        title: "Strong Partnerships with a Strong Brand",
-        description: "1xBet is a trusted sponsor and business partner of world-renowned clubs, athletes, and technology brands."
-      },
-      players: {
-        title: "Top T\xFCrkiye players",
-        digit1: "Player 1",
-        digit2: "Player 2",
-        digit3: "Player 3"
-      },
-      secondary: {
-        button: "Bet Now"
-      },
-      infographics: {
-        title: "Fast, Easy, Secure \u2014 we're ready for your win",
-        item1: "Fast",
-        item2: "Easy",
-        item3: "Secure",
-        desc1: "Create your bet slip in 3 clicks. Live odds update in milliseconds; pages open in < 1 sec.",
-        desc2: "60+ payment methods, instant TL deposit/withdrawal. Find thousands of matches and markets in seconds with smart filters.",
-        desc3: "Curacao licensed certified betting site. 256-bit SSL, independent audits and responsible gaming policy keep your data safe."
-      },
-      banners: {
-        title: "Start winning now!"
-      },
       telegram: {
         title: "Stay Connected \u2014 <span>Join Our Telegram</span>",
         description: "Get the hottest sports stories, trend alerts, and exclusive insights directly in our Telegram channel. Don\u2019t miss out on updates and surprises!",
@@ -47,43 +42,38 @@
       }
     },
     tr: {
+      sort: {
+        "sort-defaul": "Y\xFCkselen",
+        "sort-likes": "Pop\xFCler",
+        "sort-date": "Yeni"
+      },
+      search: {
+        title: "Trendler",
+        placeholderMain: "Trendleri ve haberleri ara...",
+        placeholder: "Ara...",
+        trending: "Panel",
+        btn: "Ara"
+      },
       header: {
         menuHome: "Ana Sayfa",
         menuAbout: "Hakk\u0131m\u0131zda",
         menuContact: "\u0130leti\u015Fim"
       },
+      trends: {
+        title: "En Pop\xFCler Trendler",
+        description: "D\xFCnya genelinde en pop\xFCler spor konular\u0131n\u0131n ger\xE7ek zamanl\u0131 takibi"
+      },
+      news: {
+        title: "Spor haberleri",
+        viewAll: "T\xFCm g\xF6nderileri g\xF6r\xFCnt\xFCle"
+      },
       footer: {
         copyright: "T\xFCm haklar\u0131 sakl\u0131d\u0131r."
       },
       main: {
-        title: "Site engellendi, ama kuponun g\xFCvende",
-        description: "\xC7al\u0131\u015Fan ba\u011Flant\u0131y\u0131 senin i\xE7in bulduk \u2014 \xFCstelik hesab\u0131na \xF6zel bir bonus haz\u0131rlad\u0131k.",
+        title: "Go OG \u2014 Trendleri Takip Et",
+        description: "MENA genelinde spor i\xE7eriklerini ke\u015Ffeden ve takip eden topluluk odakl\u0131 bir platform.",
         button: "Bonusu Al"
-      },
-      xbet: {
-        title: "G\xFC\xE7l\xFC Markayla G\xFC\xE7l\xFC Ortakl\u0131klar",
-        description: "1xBet, d\xFCnya \xE7ap\u0131nda tan\u0131nan kul\xFCplerin, sporcular\u0131n ve teknoloji markalar\u0131n\u0131n g\xFCvenilir sponsoru ve i\u015F orta\u011F\u0131d\u0131r."
-      },
-      players: {
-        title: "Top T\xFCrkiye oyuncular\u0131",
-        digit1: "Oyuncu 1",
-        digit2: "Oyuncu 2",
-        digit3: "Oyuncu 3"
-      },
-      secondary: {
-        button: "Bahis Yap"
-      },
-      infographics: {
-        title: "H\u0131zl\u0131, Kolay, G\xFCvenli \u2014 kazanman\u0131z i\xE7in haz\u0131r\u0131z",
-        item1: "H\u0131zl\u0131",
-        item2: "Kolay",
-        item3: "G\xFCvenli",
-        desc1: "Bahis kuponunuzu 3 t\u0131kta olu\u015Fturun. Canl\u0131 oranlar milisaniyeler i\xE7inde g\xFCncellenir; sayfalar < 1 sn\u2019de a\xE7\u0131l\u0131r.",
-        desc2: "60+ \xF6deme y\xF6ntemi, an\u0131nda TL yat\u0131rma / \xE7ekme. Binlerce ma\xE7 ve marketi ak\u0131ll\u0131 filtrelerle saniyeler i\xE7inde bulun.",
-        desc3: "Cura\xE7ao lisansl\u0131 sertifikal\u0131 bahis sitesi. 256-bit SSL, ba\u011F\u0131ms\u0131z denetimler ve sorumlu oyun politikas\u0131yla verileriniz g\xFCvende."
-      },
-      banners: {
-        title: "Kazanmaya \u015Eimdi Ba\u015Fla!"
       },
       telegram: {
         title: "Ba\u011Flant\u0131da Kal\u0131n \u2014 <span>Telegram'a Kat\u0131l\u0131n</span>",
@@ -108,15 +98,24 @@
     const t = translations[lang];
     if (!t)
       return;
-    document.querySelectorAll('[data-i18n="players.title"]').forEach((el) => el.textContent = t.players.title);
-    document.querySelectorAll('[data-i18n="players.digit1"]').forEach((el) => el.textContent = t.players.digit1);
-    document.querySelectorAll('[data-i18n="players.digit2"]').forEach((el) => el.textContent = t.players.digit2);
-    document.querySelectorAll('[data-i18n="players.digit3"]').forEach((el) => el.textContent = t.players.digit3);
-    document.querySelectorAll('[data-i18n="secondary.button"]').forEach((el) => el.textContent = t.secondary.button);
+    if (t.search) {
+      document.querySelectorAll('[data-i18n="search.title"]').forEach((el) => el.textContent = t.search.title);
+      document.querySelectorAll('[data-i18n-placeholder="search.placeholder"]').forEach((el) => el.placeholder = t.search.placeholder);
+      document.querySelectorAll('[data-i18n-placeholder="search.placeholderMain"]').forEach((el) => el.placeholder = t.search.placeholderMain);
+      document.querySelectorAll('[data-i18n="search.trending"]').forEach((el) => el.textContent = t.search.trending);
+      document.querySelectorAll('[data-i18n="search.btn"]').forEach((el) => el.textContent = t.search.btn);
+    }
+    if (t.sort) {
+      document.querySelectorAll('[data-i18n="sort.sort-defaul"]').forEach((el) => el.textContent = t.sort["sort-defaul"]);
+      document.querySelectorAll('[data-i18n="sort.sort-likes"]').forEach((el) => el.textContent = t.sort["sort-likes"]);
+      document.querySelectorAll('[data-i18n="sort.sort-date"]').forEach((el) => el.textContent = t.sort["sort-date"]);
+    }
     document.querySelectorAll('[data-i18n="header.title"]').forEach((el) => el.textContent = t.header.title);
     document.querySelectorAll('[data-i18n="header.menuHome"]').forEach((el) => el.textContent = t.header.menuHome);
     document.querySelectorAll('[data-i18n="header.menuAbout"]').forEach((el) => el.textContent = t.header.menuAbout);
     document.querySelectorAll('[data-i18n="header.menuContact"]').forEach((el) => el.textContent = t.header.menuContact);
+    document.querySelectorAll('[data-i18n="trends.title"]').forEach((el) => el.textContent = t.trends.title);
+    document.querySelectorAll('[data-i18n="trends.description"]').forEach((el) => el.textContent = t.trends.description);
     document.querySelectorAll('[data-i18n="footer.copyright"]').forEach((el) => el.textContent = t.footer.copyright);
     document.querySelectorAll('[data-i18n="main.title"]').forEach((el) => {
       if (typeof t.main.title === "object" && t.main.title.html) {
@@ -127,16 +126,7 @@
     });
     document.querySelectorAll('[data-i18n="main.description"]').forEach((el) => el.textContent = t.main.description);
     document.querySelectorAll('[data-i18n="main.button"]').forEach((el) => el.textContent = t.main.button);
-    document.querySelectorAll('[data-i18n="infographics.title"]').forEach((el) => el.textContent = t.infographics.title);
-    document.querySelectorAll('[data-i18n="infographics.item1"]').forEach((el) => el.textContent = t.infographics.item1);
-    document.querySelectorAll('[data-i18n="infographics.item2"]').forEach((el) => el.textContent = t.infographics.item2);
-    document.querySelectorAll('[data-i18n="infographics.item3"]').forEach((el) => el.textContent = t.infographics.item3);
-    document.querySelectorAll('[data-i18n="infographics.desc1"]').forEach((el) => el.textContent = t.infographics.desc1);
-    document.querySelectorAll('[data-i18n="infographics.desc2"]').forEach((el) => el.textContent = t.infographics.desc2);
-    document.querySelectorAll('[data-i18n="infographics.desc3"]').forEach((el) => el.textContent = t.infographics.desc3);
-    document.querySelectorAll('[data-i18n="banners.title"]').forEach((el) => el.textContent = t.banners.title);
-    document.querySelectorAll('[data-i18n="xbet.title"]').forEach((el) => el.textContent = t.xbet.title);
-    document.querySelectorAll('[data-i18n="xbet.description"]').forEach((el) => el.textContent = t.xbet.description);
+    document.querySelectorAll('[data-i18n="news.title"]').forEach((el) => el.textContent = t.news.title);
     document.querySelectorAll('[data-i18n="telegram.title"]').forEach((el) => el.innerHTML = t.telegram.title);
     document.querySelectorAll('[data-i18n="telegram.description"]').forEach((el) => el.textContent = t.telegram.description);
     document.querySelectorAll('[data-i18n="telegram.button"]').forEach((el) => el.textContent = t.telegram.button);
@@ -4843,7 +4833,7 @@
         const li = document.createElement("li");
         li.className = "top-trends__item";
         li.textContent = q;
-        li.addEventListener("click", () => loadNews(q));
+        li.addEventListener("click", () => loadNews2(q));
         return li;
       });
       const customLi = document.createElement("li");
@@ -4858,7 +4848,7 @@
         const li = document.createElement("li");
         li.className = "top-trends__item";
         li.textContent = q;
-        li.addEventListener("click", () => loadNews(q));
+        li.addEventListener("click", () => loadNews2(q));
         return li;
       });
       const customLi = document.createElement("li");
@@ -4873,7 +4863,7 @@
         const li = document.createElement("li");
         li.className = "top-trends__item";
         li.textContent = q;
-        li.addEventListener("click", () => loadNews(q));
+        li.addEventListener("click", () => loadNews2(q));
         return li;
       });
       const customLi = document.createElement("li");
@@ -4882,7 +4872,8 @@
       insertCustomRandomly(lis, customLi).forEach((li) => lebUl.appendChild(li));
     }
   }
-  async function loadNews(topic) {
+  async function loadNews2(topic) {
+    window.loadNews = loadNews2;
     const res = await fetch(`/news?q=${encodeURIComponent(topic)}`);
     const articles = await res.json();
     articles.forEach((a) => {
@@ -4895,69 +4886,107 @@
     renderNews(articles);
   }
   function renderNews(articles) {
-    const container = document.getElementById("news-container");
-    container.innerHTML = "";
-    if (!articles.length) {
-      container.innerHTML = "<p>\u041D\u043E\u0432\u043E\u0441\u0442\u0435\u0439 \u043D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D\u043E</p>";
-      return;
-    }
-    articles.forEach((article) => {
-      const item = document.createElement("div");
-      const isCustom = article.title === "\u0413\u0430\u043B\u0430\u0446\u0430\u0441\u0430\u0440\u0430\u0439 \u0432\u044B\u0438\u0433\u0440\u0430\u043B \u0432\u0430\u0436\u043D\u044B\u0439 \u043C\u0430\u0442\u0447!" || article.title === "\u0418\u043D\u0442\u0435\u0440\u0432\u044C\u044E \u0441 \u0442\u0440\u0435\u043D\u0435\u0440\u043E\u043C \u0413\u0430\u043B\u0430\u0446\u0430\u0441\u0430\u0440\u0430\u044F";
-      item.className = "news-item" + (isCustom ? " news-item--custom" : "");
-      item.innerHTML = `
-      ${article.imageUrl ? `<div class="news-item__image" style="background-image:url(${article.imageUrl})"></div>` : ""}
-      <div class="news-item__content">
-      <h3><a href="${article.url}" target="_blank">${article.title}</a></h3>
-      <p>${article.description || ""}</p>
-      <small>${new Date(article.publishedAt).toLocaleString()}</small>
-      </div>
-      <div class="news-item__summary">\u{1F44D} \u041B\u0430\u0439\u043A\u0438: ${article.likes ?? 0} | \u{1F441}\uFE0F \u041F\u0440\u043E\u0441\u043C\u043E\u0442\u0440\u044B: ${article.views ?? 0}</div>
-    `;
-      container.appendChild(item);
+    const containers = document.querySelectorAll(".news__list");
+    containers.forEach((container) => {
+      container.innerHTML = "";
+      if (!articles.length) {
+        container.innerHTML = "<p>\u041D\u043E\u0432\u043E\u0441\u0442\u0435\u0439 \u043D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D\u043E</p>";
+        return;
+      }
+      articles.forEach((article) => {
+        const item = document.createElement("div");
+        const isCustom = article.title === "\u0413\u0430\u043B\u0430\u0446\u0430\u0441\u0430\u0440\u0430\u0439 \u0432\u044B\u0438\u0433\u0440\u0430\u043B \u0432\u0430\u0436\u043D\u044B\u0439 \u043C\u0430\u0442\u0447!" || article.title === "\u0418\u043D\u0442\u0435\u0440\u0432\u044C\u044E \u0441 \u0442\u0440\u0435\u043D\u0435\u0440\u043E\u043C \u0413\u0430\u043B\u0430\u0446\u0430\u0441\u0430\u0440\u0430\u044F";
+        item.className = "news-item" + (isCustom ? " news-item--custom" : "");
+        item.innerHTML = `
+        ${article.imageUrl ? `<div class="news-item__image" style="background-image:url(${article.imageUrl})"></div>` : ""}
+        <div class="news-item__content">
+        <h3><a href="${article.url}" target="_blank">${article.title}</a></h3>
+        <p>${article.description || ""}</p>
+        <small>${new Date(article.publishedAt).toLocaleString()}</small>
+        </div>
+        <div class="news-item__summary">\u{1F44D} \u041B\u0430\u0439\u043A\u0438: ${article.likes ?? 0} | \u{1F441}\uFE0F \u041F\u0440\u043E\u0441\u043C\u043E\u0442\u0440\u044B: ${article.views ?? 0}</div>
+      `;
+        container.appendChild(item);
+      });
     });
   }
   document.addEventListener("DOMContentLoaded", () => {
-    const input = document.getElementById("search-input");
-    const btn = document.getElementById("search-btn");
-    if (input && btn) {
-      btn.addEventListener("click", () => {
-        const query = input.value.trim();
-        if (query)
-          loadNews(query);
-      });
+    document.querySelectorAll(".search-input").forEach((input) => {
+      let btn = null;
+      const form = input.closest(".search-form");
+      if (form) {
+        btn = form.querySelector(".search-btn, .search-button");
+      }
+      if (!btn) {
+        btn = input.parentElement.querySelector(".search-btn, .search-button");
+      }
+      if (btn) {
+        btn.addEventListener("click", () => {
+          const query = input.value.trim();
+          if (query)
+            loadNews2(query);
+        });
+      }
       input.addEventListener("keydown", (e) => {
         if (e.key === "Enter") {
           const query = input.value.trim();
           if (query)
-            loadNews(query);
+            loadNews2(query);
         }
       });
-    }
-    function setActiveSort(btnId) {
-      document.querySelectorAll("#sort-default, #sort-date, #sort-likes, #sort-views").forEach((btn3) => {
-        btn3.classList.remove("active");
-      });
-      const btn2 = document.getElementById(btnId);
-      if (btn2)
-        btn2.classList.add("active");
-    }
-    document.getElementById("sort-default").addEventListener("click", () => {
-      renderNews(lastArticles);
-      setActiveSort("sort-default");
     });
-    document.getElementById("sort-date").addEventListener("click", () => {
-      const sorted = [...lastArticles].sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
-      renderNews(sorted);
-      setActiveSort("sort-date");
-    });
-    document.getElementById("sort-likes").addEventListener("click", () => {
-      const sorted = [...lastArticles].sort((a, b) => (b.likes ?? 0) - (a.likes ?? 0));
-      renderNews(sorted);
-      setActiveSort("sort-likes");
+    document.querySelectorAll(".news-index__sort, .sort").forEach((sortBlock) => {
+      const list = sortBlock.closest(".search-page, .news-index, .news-block, .main-width");
+      let newsList = null;
+      if (list) {
+        newsList = list.querySelector(".news__list");
+      }
+      function setActiveSort(btnId) {
+        sortBlock.querySelectorAll(".sort__btn").forEach((btn2) => {
+          btn2.classList.remove("active");
+        });
+        const btn = sortBlock.querySelector(`#${btnId}`);
+        if (btn)
+          btn.classList.add("active");
+      }
+      const defaultBtn = sortBlock.querySelector("#sort-default");
+      if (defaultBtn) {
+        defaultBtn.addEventListener("click", () => {
+          if (newsList)
+            renderNews(lastArticles);
+          setActiveSort("sort-default");
+        });
+      }
+      const dateBtn = sortBlock.querySelector("#sort-date");
+      if (dateBtn) {
+        dateBtn.addEventListener("click", () => {
+          const sorted = [...lastArticles].sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
+          if (newsList)
+            renderNews(sorted);
+          setActiveSort("sort-date");
+        });
+      }
+      const likesBtn = sortBlock.querySelector("#sort-likes");
+      if (likesBtn) {
+        likesBtn.addEventListener("click", () => {
+          const sorted = [...lastArticles].sort((a, b) => (b.likes ?? 0) - (a.likes ?? 0));
+          if (newsList)
+            renderNews(sorted);
+          setActiveSort("sort-likes");
+        });
+      }
+      const viewsBtn = sortBlock.querySelector("#sort-views");
+      if (viewsBtn) {
+        viewsBtn.addEventListener("click", () => {
+          const sorted = [...lastArticles].sort((a, b) => (b.views ?? 0) - (a.views ?? 0));
+          if (newsList)
+            renderNews(sorted);
+          setActiveSort("sort-views");
+        });
+      }
     });
     loadPopularAll();
-    loadNews("Galatasaray");
+    loadNews2("Galatasaray");
     loadTopTurkeyNews();
     document.querySelectorAll(".top-trends__list ul").forEach((ul) => {
       ul.addEventListener("click", function(e) {
@@ -4970,5 +4999,166 @@
         }
       });
     });
+  });
+
+  // src/js/main.js
+  document.addEventListener("DOMContentLoaded", () => {
+    const logo = document.querySelector(".header__logo");
+    logo?.addEventListener("click", (e) => {
+      e.preventDefault();
+      document.querySelector(".main-block")?.classList.remove("hidden");
+      document.querySelector(".top-trends")?.classList.remove("hidden");
+      document.querySelector(".telegram")?.classList.remove("hidden");
+      document.querySelector(".search-page")?.classList.add("hidden");
+      document.querySelector(".index-page")?.classList.remove("hidden");
+      const newsH22 = document.querySelector(".news__h2");
+      if (newsH22)
+        newsH22.textContent = "Sports news";
+    });
+    const mainInput = document.querySelector(".main-block__input");
+    const newsH2 = document.querySelector(".news__h2");
+    if (mainInput && newsH2) {
+      mainInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          const query = mainInput.value.trim();
+          if (query) {
+            newsH2.textContent = query;
+            document.querySelector(".main-block")?.classList.add("hidden");
+            document.querySelector(".top-trends")?.classList.add("hidden");
+            document.querySelector(".telegram")?.classList.add("hidden");
+          }
+        }
+      });
+    }
+    document.querySelectorAll(".top-trends__list ul").forEach((ul) => {
+      ul.addEventListener("click", function(e) {
+        const li = e.target.closest("li");
+        if (!li)
+          return;
+        if (newsH2 && li.textContent.trim()) {
+          newsH2.textContent = li.textContent.trim();
+          document.querySelector(".main-block")?.classList.add("hidden");
+          document.querySelector(".top-trends")?.classList.add("hidden");
+          document.querySelector(".telegram")?.classList.add("hidden");
+        }
+      });
+    });
+    document.querySelectorAll(".search-popup").forEach((popup) => {
+      const openBtns = document.querySelectorAll(".search-btn");
+      const closeBtns = popup.querySelectorAll(".search-popup__close, #search-close-btn");
+      const container = popup.querySelector(".search-popup__container");
+      openBtns.forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          e.preventDefault();
+          popup.classList.add("open");
+        });
+      });
+      closeBtns.forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          e.preventDefault();
+          popup.classList.remove("open");
+        });
+      });
+      if (container) {
+        popup.addEventListener("click", (e) => {
+          if (!container.contains(e.target)) {
+            popup.classList.remove("open");
+          }
+        });
+      }
+    });
+  });
+  document.addEventListener("DOMContentLoaded", () => {
+    const allNewsBtn = document.querySelector(".all-news-btn");
+    const newsList = document.querySelector(".news__list--index");
+    allNewsBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      if (newsList) {
+        newsList.querySelectorAll(".news-item").forEach((item, index) => {
+          if (index >= 16) {
+            item.style.display = "flex";
+          }
+        });
+        allNewsBtn.style.display = "none";
+      }
+    });
+  });
+  async function showRandomTrendsInPopup() {
+    try {
+      const res = await fetch("/popular/all");
+      const data = await res.json();
+      const allTrends = [...data.turkey || [], ...data.azerbaijan || [], ...data.lebanon || []];
+      const randomTrends = [];
+      const used = /* @__PURE__ */ new Set();
+      while (randomTrends.length < 3 && allTrends.length) {
+        const idx = Math.floor(Math.random() * allTrends.length);
+        if (!used.has(allTrends[idx])) {
+          randomTrends.push(allTrends[idx]);
+          used.add(allTrends[idx]);
+        }
+      }
+      const ul = document.querySelector("#search-requests ul");
+      if (ul) {
+        ul.innerHTML = "";
+        randomTrends.forEach((trend) => {
+          const li = document.createElement("li");
+          const span = document.createElement("span");
+          span.textContent = trend;
+          li.appendChild(span);
+          ul.appendChild(li);
+        });
+      }
+    } catch (e) {
+    }
+  }
+  document.addEventListener("DOMContentLoaded", () => {
+    const popup = document.querySelector(".search-popup");
+    const indexPage = document.querySelector(".index-page");
+    const searchPage = document.querySelector(".search-page");
+    const newsH2 = document.querySelector(".news__h2");
+    if (popup) {
+      let updateBtnState = function() {
+        if (btn && input) {
+          btn.disabled = !input.value.trim();
+        }
+      };
+      showRandomTrendsInPopup();
+      const ul = popup.querySelector("#search-requests ul");
+      const input = popup.querySelector("#search-popup-input");
+      const btn = popup.querySelector(".search-popup__btn");
+      if (ul) {
+        ul.addEventListener("click", function(e) {
+          const li = e.target.closest("li");
+          if (li && input) {
+            input.value = li.textContent.trim();
+            updateBtnState();
+            if (newsH2)
+              newsH2.textContent = li.textContent.trim();
+          }
+        });
+      }
+      if (input) {
+        input.addEventListener("input", updateBtnState);
+        updateBtnState();
+        btn.addEventListener("click", () => {
+          const query = input.value.trim();
+          if (query) {
+            loadNews(query);
+            popup.classList.remove("open");
+            if (indexPage) {
+              indexPage.classList.add("hidden");
+            }
+            if (searchPage) {
+              searchPage.classList.remove("hidden");
+            }
+            if (newsH2)
+              newsH2.textContent = query;
+            document.querySelector(".main-block")?.classList.add("hidden");
+            document.querySelector(".top-trends")?.classList.add("hidden");
+            document.querySelector(".telegram")?.classList.add("hidden");
+          }
+        });
+      }
+    }
   });
 })();

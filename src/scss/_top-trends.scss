@@ -5,6 +5,10 @@
     flex-direction: column;
     gap: 24px;
 
+    &.hidden {
+            display: none;
+        }
+
     &__container {
         display: flex;
         align-items: stretch;

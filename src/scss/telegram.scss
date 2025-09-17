@@ -8,6 +8,10 @@
     border-radius: 40px;
     background: linear-gradient(270deg, #0060E5 0%, #001A33 56.36%);
 
+    &.hidden {
+            display: none;
+        }
+
     &__content {
         display: flex;
         flex-direction: column;

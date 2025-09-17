@@ -12,6 +12,10 @@
     border-radius: 40px;
     overflow: hidden;
 
+    &.hidden {
+            display: none;
+        }
+
     &__content {
         display: flex;
         flex-direction: column;
@@ -155,10 +159,11 @@
             justify-content: flex-start;
             gap: 12px;
         }
+        
 
             .swiper-slide {
                 width: 387px !important;
-            }
+        }
 
         &__item {
             display: flex;

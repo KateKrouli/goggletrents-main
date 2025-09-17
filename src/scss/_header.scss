@@ -8,6 +8,11 @@ header {
   @media (max-width: 767px) {
       position:fixed;
       z-index: 999;
+      width: 100%;
+      left: 0;
+      top: 0;
+      background: #F4F9FF;
+      padding: 8px;
     }
 
   .header {
@@ -46,9 +51,9 @@ header {
     }
 
     &__nav {
+      flex: 1;
       display: flex;
       align-items: center;
-      margin-left: auto;
       justify-content: space-between;
       gap: 5vw;
 
@@ -73,12 +78,16 @@ header {
         }
        }
 
-      nav ul {
+      nav {
+         margin-left: auto;
+
+      ul {
         display: flex;
         list-style: none;
         margin: 0;
         padding: 0;
         gap: 28px;
+       
 
         @media (max-width: 767px) {
           flex-direction: column;
@@ -107,13 +116,11 @@ header {
           }
         }
       }
+    }
     } 
 
     .search-btn {
-      width: 44px;
-      height:44px;
-      border: 1px solid #001A33;
-      border-radius: 50%;
+      margin-left: 0;
     }
 
     &__mobile-btn {
