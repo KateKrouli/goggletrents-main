@@ -12,7 +12,8 @@ const translations = {
       placeholderMain: "Search trends and news...",
       placeholder: "Search...",
       trending: "Dashboard",
-      btn: "Search"
+      btn: "Search", 
+      close: "Cancel"
     },
     header: {
       menuHome: "Trending",
@@ -20,7 +21,7 @@ const translations = {
       menuContact: "About"
     },
     trends: {
-      title: "Top Trends",
+      title: "Top trends across MENA",
       description: "Real-time tracking of the hottest sports topics across "
     },
     news: {
@@ -52,7 +53,8 @@ const translations = {
       placeholderMain: "Trendleri ve haberleri ara...",
       placeholder: "Ara...",
       trending: "Panel",
-      btn: "Ara"
+      btn: "Ara", 
+      close: "İptal"
     },
     header: {
       menuHome: "Ana Sayfa",
@@ -112,6 +114,7 @@ function applyTranslations(lang) {
     document.querySelectorAll('[data-i18n-placeholder="search.placeholderMain"]').forEach(el => el.placeholder = t.search.placeholderMain);
     document.querySelectorAll('[data-i18n="search.trending"]').forEach(el => el.textContent = t.search.trending);
     document.querySelectorAll('[data-i18n="search.btn"]').forEach(el => el.textContent = t.search.btn);
+    document.querySelectorAll('[data-i18n="search.close"]').forEach(el => el.textContent = t.search.close);
   }
   // Sort
   if (t.sort) {
@@ -142,6 +145,7 @@ function applyTranslations(lang) {
   document.querySelectorAll('[data-i18n="main.button"]').forEach(el => el.textContent = t.main.button);
   // News
   document.querySelectorAll('[data-i18n="news.title"]').forEach(el => el.textContent = t.news.title);
+  document.querySelectorAll('[data-i18n="news.viewAll"]').forEach(el => el.textContent = t.news.viewAll);
   // Telegram
   document.querySelectorAll('[data-i18n="telegram.title"]').forEach(el => el.innerHTML = t.telegram.title);
   document.querySelectorAll('[data-i18n="telegram.description"]').forEach(el => el.textContent = t.telegram.description);

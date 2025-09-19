@@ -21,17 +21,3 @@
   </div>
 </header>
  
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const mobileBtn = document.querySelector('.header__mobile-btn');
-  const nav = document.querySelector('.header__nav');
-  const header = document.querySelector('header');
-  if (mobileBtn && nav && header) {
-    mobileBtn.addEventListener('click', function() {
-      mobileBtn.classList.toggle('close');
-      nav.classList.toggle('open');
-      header.classList.toggle('nav-open');
-    });
-  }
-});
-</script>

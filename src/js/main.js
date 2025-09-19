@@ -1,3 +1,26 @@
+
+document.addEventListener('DOMContentLoaded', function() {
+  const mobileBtn = document.querySelector('.header__mobile-btn');
+  const nav = document.querySelector('.header__nav');
+  const header = document.querySelector('header');
+  const openBtns = document.querySelectorAll('.search-btn');
+  if (mobileBtn && nav && header) {
+    mobileBtn.addEventListener('click', function() {
+      mobileBtn.classList.toggle('close');
+      nav.classList.toggle('open');
+      header.classList.toggle('nav-open');
+    });
+  }
+
+  openBtns.forEach(btn => {
+			btn.addEventListener('click', (e) => {
+				 mobileBtn.classList.remove('close');
+				nav.classList.remove('open');
+				header.classList.remove('nav-open');
+			});
+		});  
+});
+
 // Открытие/закрытие попапа поиска
 document.addEventListener('DOMContentLoaded', () => {
 	// Возврат в изначальное состояние по клику на логотип
@@ -45,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	});
 	document.querySelectorAll('.search-popup').forEach(popup => {
 		const openBtns = document.querySelectorAll('.search-btn');
-		const closeBtns = popup.querySelectorAll('.search-popup__close, #search-close-btn');
+		const closeBtns = popup.querySelectorAll('.search-popup__close');
 		const container = popup.querySelector('.search-popup__container');
 		openBtns.forEach(btn => {
 			btn.addEventListener('click', (e) => {
@@ -223,22 +246,28 @@ async function showRandomTrendsInPopup() {
 				input.addEventListener('input', updateBtnState);
 				// Инициализация состояния кнопки при загрузке
 				updateBtnState();
-				btn.addEventListener('click', () => {
+				function handleSearchPopup() {
 					const query = input.value.trim();
-								if (query) {
-									loadNews(query);
-									popup.classList.remove('open');
-									if (indexPage) {
-										indexPage.classList.add('hidden');
-									}
-									if (searchPage) {
-										searchPage.classList.remove('hidden');
-									}
-									if (newsH2) newsH2.textContent = query;
-									document.querySelector('.main-block')?.classList.add('hidden');
-									document.querySelector('.top-trends')?.classList.add('hidden');
-									document.querySelector('.telegram')?.classList.add('hidden');
-								}
+					if (query) {
+						loadNews(query);
+						popup.classList.remove('open');
+						if (indexPage) {
+							indexPage.classList.add('hidden');
+						}
+						if (searchPage) {
+							searchPage.classList.remove('hidden');
+						}
+						if (newsH2) newsH2.textContent = query;
+						document.querySelector('.main-block')?.classList.add('hidden');
+						document.querySelector('.top-trends')?.classList.add('hidden');
+						document.querySelector('.telegram')?.classList.add('hidden');
+					}
+				}
+				btn.addEventListener('click', handleSearchPopup);
+				input.addEventListener('keydown', (e) => {
+					if (e.key === 'Enter') {
+						handleSearchPopup();
+					}
 				});
 			}
 		}

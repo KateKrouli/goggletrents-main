@@ -28,13 +28,15 @@
         </defs>
       </svg>
     </span>
+    <label>Turkey</label>
   </button>
   <button type="button" class="lang-btn" data-value="en">
     <span class="lang-flag flag-en">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_3238_134572)"><path d="M12 24C18.6274 24 24 18.6274 24 12C24 5.37258 18.6274 0 12 0C5.37258 0 0 5.37258 0 12C0 18.6274 5.37258 24 12 24Z" fill="#F0F0F0"></path><path d="M2.48032 4.69409C1.53771 5.92048 0.826945 7.334 0.413086 8.86958H6.6558L2.48032 4.69409Z" fill="#0052B4"></path><path d="M23.5864 8.86953C23.1725 7.334 22.4617 5.92048 21.5191 4.69409L17.3438 8.86953H23.5864Z" fill="#0052B4"></path><path d="M0.413086 15.1304C0.826992 16.6659 1.53776 18.0794 2.48032 19.3058L6.65566 15.1304H0.413086Z" fill="#0052B4"></path><path d="M19.3053 2.48061C18.0789 1.538 16.6655 0.827236 15.1299 0.41333V6.656L19.3053 2.48061Z" fill="#0052B4"></path><path d="M4.69434 21.5193C5.92073 22.4619 7.33424 23.1727 8.86977 23.5866V17.344L4.69434 21.5193Z" fill="#0052B4"></path><path d="M8.86973 0.41333C7.33419 0.827236 5.92068 1.538 4.69434 2.48056L8.86973 6.65595V0.41333Z" fill="#0052B4"></path><path d="M15.1299 23.5866C16.6654 23.1727 18.0789 22.4619 19.3053 21.5194L15.1299 17.344V23.5866Z" fill="#0052B4"></path><path d="M17.3438 15.1304L21.5191 19.3058C22.4617 18.0795 23.1725 16.6659 23.5864 15.1304H17.3438Z" fill="#0052B4"></path><path d="M23.8984 10.4348H13.5653H13.5653V0.101578C13.0529 0.034875 12.5305 0 12 0C11.4694 0 10.9471 0.034875 10.4348 0.101578V10.4347V10.4347H0.101578C0.034875 10.9471 0 11.4695 0 12C0 12.5306 0.034875 13.0529 0.101578 13.5652H10.4347H10.4347V23.8984C10.9471 23.9651 11.4694 24 12 24C12.5305 24 13.0529 23.9652 13.5652 23.8984V13.5653V13.5653H23.8984C23.9651 13.0529 24 12.5306 24 12C24 11.4695 23.9651 10.9471 23.8984 10.4348Z" fill="#D80027"></path><path d="M15.1309 15.1304L20.4857 20.4852C20.732 20.239 20.9669 19.9817 21.191 19.7148L16.6066 15.1304H15.1309V15.1304Z" fill="#D80027"></path><path d="M8.86951 15.1306H8.86941L3.51465 20.4854C3.76084 20.7317 4.01823 20.9666 4.28504 21.1908L8.86951 16.6062V15.1306Z" fill="#D80027"></path><path d="M8.86976 8.8696V8.86951L3.51495 3.51465C3.26866 3.76084 3.03373 4.01823 2.80957 4.28504L7.39409 8.86955L8.86976 8.8696Z" fill="#D80027"></path><path d="M15.1309 8.86956L20.4857 3.51465C20.2395 3.26837 19.9821 3.03344 19.7153 2.80933L15.1309 7.39384V8.86956Z" fill="#D80027"></path></g><defs><clipPath id="clip0_3238_134572"><rect width="24" height="24" fill="white"></rect></clipPath></defs></svg>
     </span>
+     <label>English</label>
   </button>
-</div>
+</div> 
 
 <style>
 .custom-lang-switcher {
@@ -77,17 +79,31 @@
   align-items: center;
   justify-content: center;
 }
+
+.lang-btn label {
+  display: none;
+}
 @media (max-width: 767px) {
   .custom-lang-switcher {
-    width: 100%;
     justify-content: center;
-    gap: 12px;
+    width: 270px;
+    margin-left: 0;
+    margin-top: auto;
+    align-self: flex-start;
+    order: 1;
   }
   .lang-btn {
     width: 50%;
     justify-content: center;
     padding: 12px 16px 12px 12px;
     font-size: 15px;
+    border-radius: 80px;
+  }
+
+  .lang-btn label {
+    display: block;
+    font-size: 16px;
+    margin: 0 18px 0 20px;
   }
 }
 </style>
@@ -133,20 +149,6 @@ document.addEventListener('DOMContentLoaded', function() {
   </div>
 </header>
  
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const mobileBtn = document.querySelector('.header__mobile-btn');
-  const nav = document.querySelector('.header__nav');
-  const header = document.querySelector('header');
-  if (mobileBtn && nav && header) {
-    mobileBtn.addEventListener('click', function() {
-      mobileBtn.classList.toggle('close');
-      nav.classList.toggle('open');
-      header.classList.toggle('nav-open');
-    });
-  }
-});
-</script>
   <main>
     <div class="index-page"> 
       
@@ -257,7 +259,7 @@ document.addEventListener('DOMContentLoaded', function() {
     <div class="search-popup__container">
         <div class="search-popup__title">
             <div data-i18n="search.title">Trending</div>
-            <a class="search-popup__close" id="search-close-btn">
+            <a class="search-popup__close">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
                     <g opacity="0.33">
                         <path d="M12.4998 8.00033L7.49984 13.0003M7.49984 8.00033L12.4998 13.0003M18.3332 10.5003C18.3332 15.1027 14.6022 18.8337 9.99984 18.8337C5.39746 18.8337 1.6665 15.1027 1.6665 10.5003C1.6665 5.89795 5.39746 2.16699 9.99984 2.16699C14.6022 2.16699 18.3332 5.89795 18.3332 10.5003Z" stroke="#001A33" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -274,10 +276,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 </ul>
             </div>
             <button type="submit" data-i18n="search.btn" class="btn search-popup__btn search-button" disabled="">Search</button>
+            <a class=" search-popup__close search-popup__close--mobile" data-i18n="search.close">
+            </a>
         </div>
     </div>
 </div>
-  </main> 
+      <!-- <iframe 
+      class="game-container"
+      src="https://dinosaur-game.io/game/dino/" 
+      allowfullscreen
+      frameborder="0">
+    </iframe> -->
+  </main>   
 
   <footer>
     <div class="footer main-width">
@@ -285,8 +295,9 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
 </footer>  
 
+  <script src="js/swiper-bundle.min.js"></script>
   <script src="js/lang.js"></script>
   <script src="js/main.js"></script>
-  <script src="js/news.js"></script>
+  <!-- <script src="js/news.js"></script> -->
 </body> 
 </html>

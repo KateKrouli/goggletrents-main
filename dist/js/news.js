@@ -1,6 +1,3 @@
-import Swiper from 'swiper';
-import { Autoplay } from 'swiper/modules';
-
 // Загрузка новостей по Турции в top-news__list
 let topNewsSwiper = null;
 
@@ -30,7 +27,6 @@ async function loadTopTurkeyNews() {
     topNewsSwiper.destroy(true, true);
   }
   topNewsSwiper = new Swiper('.top-news__slider.swiper-container', {
-    modules: [Autoplay],
     slidesPerView: 1,
     spaceBetween: 20,
     loop: true,

@@ -1,5 +1,3 @@
-import Swiper from 'swiper';
-import { Autoplay } from 'swiper/modules';
 
 // Загрузка новостей по Турции в top-news__list
 let topNewsSwiper = null;
@@ -30,8 +28,7 @@ async function loadTopTurkeyNews() {
     topNewsSwiper.destroy(true, true);
   }
   topNewsSwiper = new Swiper('.top-news__slider', {
-    modules: [Autoplay],
-    slidesPerView: 1, 
+    slidesPerView: 1,
     spaceBetween: 20,
     slidesToScroll: 1,
     loop: true,
@@ -39,6 +36,14 @@ async function loadTopTurkeyNews() {
       delay: 3500,
       disableOnInteraction: false,
     },
+    breakpoints: {
+      0: {
+        spaceBetween: 6
+      },
+      768: {
+        spaceBetween: 20
+      }
+    }
   });
 }
 let lastArticles = []; // Сохраняем последние загруженные статьи
